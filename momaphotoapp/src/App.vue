@@ -1,28 +1,95 @@
-/* eslint-disable */
 <template>
-  <div id="app">
-    <ul class="cardlist">
-      <li class="cardlistitem">
-          <Card class="row" :artworks="artworks" :Medium="Medium"/>
-      </li>
-    </ul>
-  </div>
+  <v-app>
+    <v-navigation-drawer
+      persistent
+      :mini-variant="miniVariant"
+      :clipped="clipped"
+      v-model="drawer"
+      enable-resize-watcher
+      fixed
+      app
+    >
+      <v-list>
+        <v-list-tile
+          value="true"
+          v-for="(item, i) in items"
+          :key="i"
+        >
+          <v-list-tile-action>
+            <v-icon v-html="item.icon"></v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title v-text="item.title"></v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
+    <v-toolbar
+      app
+      :clipped-left="clipped"
+    >
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-btn icon @click.stop="miniVariant = !miniVariant">
+        <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>
+      </v-btn>
+      <v-btn icon @click.stop="clipped = !clipped">
+        <v-icon>web</v-icon>
+      </v-btn>
+      <v-btn icon @click.stop="fixed = !fixed">
+        <v-icon>remove</v-icon>
+      </v-btn>
+      <v-toolbar-title v-text="title"></v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
+        <v-icon>menu</v-icon>
+      </v-btn>
+    </v-toolbar>
+    <v-content>
+      <HelloWorld :artworks="artworks" :Medium="Medium"/>
+    </v-content>
+    <v-navigation-drawer
+      temporary
+      :right="right"
+      v-model="rightDrawer"
+      fixed
+      app
+    >
+      <v-list>
+        <v-list-tile @click="right = !right">
+          <v-list-tile-action>
+            <v-icon>compare_arrows</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-title>Switch drawer (click me)</v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
+    <v-footer :fixed="fixed" app>
+      <span>&copy; 2017</span>
+    </v-footer>
+  </v-app>
 </template>
 
 <script>
-import Card from '@/components/Card';
+import HelloWorld from './components/HelloWorld';
 
 export default {
-  name: 'App',
-  components: {
-    Card
-  },
   data() {
     return {
+      clipped: false,
+      drawer: true,
+      fixed: false,
+      items: [{
+        icon: 'bubble_chart',
+        title: 'Inspire',
+      }],
+      miniVariant: false,
+      right: true,
+      rightDrawer: false,
+      title: 'Museum of Modern Art Photo Sorter',
       momaAPI_Url: '../static/momaartworks.json',
       artsyAPI_Url: 'https://api.artsy.net/api/',
       artworks: [],
-      title: '',
+      Title: '',
       artist: [],
       ConstituentID: [],
       ArtistBio: [],
@@ -46,6 +113,10 @@ export default {
       Width: 0
     };
   },
+  name: 'App',
+  components: {
+    HelloWorld,
+  },
   mounted() {
     this.getDataFromArtsty, this.getDataFromMoma();
   },
@@ -60,7 +131,7 @@ export default {
             }
           });
           artworks.forEach(artwork => {
-            this.title = artwork.Title;
+            this.Title = artwork.Title;
             this.artist = artwork.Artist;
             this.ConstituentID = artwork.ConstituentID;
             this.ArtistBio = artwork.ArtistBio;
@@ -71,7 +142,6 @@ export default {
             this.Date = artwork.Date;
             this.Medium = artwork.Medium;
             this.Dimensions = artwork.Dimensions;
-            // to be cCreditLine
             this.CreditLine = artwork.CreditLine;
             this.AccessionNumber = artwork.AccessionNumber;
             this.Classification = artwork.Classification;
@@ -96,10 +166,3 @@ export default {
   }
 };
 </script>
-
-<style>
-.card {
-  margin: 1vw;
-}
-</style>
-  

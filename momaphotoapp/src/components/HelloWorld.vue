@@ -1,9 +1,11 @@
-/* eslint-disable */
 <template>
-<div class="wrapper">
-  <div class="card border-primary mb-3" style="max-width: 20rem;"v-for="artwork in artworks" :key="artwork.ObjectID" >
-  <div class="card-header">
-    <!-- {{artwork.Medium}} -->
+  <v-container fluid>
+    <v-slide-y-transition mode="out-in">
+      <v-layout column align-center>
+        <img src="@/assets/logo.png" alt="Vuetify.js" class="mb-5">
+        <div>
+  <div v-for="artwork in artworks" :key="artwork.ObjectID" >
+  
     </div>
   <div class="card-body text-primary">
     <h4 class="card-title">
@@ -33,9 +35,18 @@
       <p><a :href="artwork.ThumbnailURL" target="_blank">Link to Thumbnail</a></p> 
       <p>{{artwork.Height}}</p>
       <p>{{artwork.Width}}</p> -->
-  </div>
 </div>
-</div>
+        <blockquote>
+          &#8220;First, solve the problem. Then, write the code.&#8221;
+          <footer>
+            <small>
+              <em>&mdash;John Johnson</em>
+            </small>
+          </footer>
+        </blockquote>
+      </v-layout>
+    </v-slide-y-transition>
+  </v-container>
 </template>
 
 <script>
@@ -45,8 +56,20 @@ export default {
 };
 </script>
 
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.image {
-  align-items: center;
+h1, h2 {
+  font-weight: normal;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
 }
 </style>
