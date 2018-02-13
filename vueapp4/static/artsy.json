@@ -1,0 +1,51 @@
+{
+  "id": "4f552b2e3b55524170000054",
+  "slug": "bill-brandt",
+  "created_at": "2012-03-05T21:08:34+00:00",
+  "updated_at": "2018-02-13T16:10:36+00:00",
+  "name": "Bill Brandt",
+  "sortable_name": "Brandt Bill",
+  "gender": "male",
+  "biography": null,
+  "birthday": "1904",
+  "deathday": "1983",
+  "hometown": "Hamburg, Germany",
+  "location": null,
+  "nationality": "British, born Germany",
+  "image_versions": ["four_thirds", "large", "square", "tall"],
+  "_links": {
+    "thumbnail": {
+      "href":
+        "https://d32dm0rphc51dk.cloudfront.net/s6uPnejXg-bqiZStv0V-Jg/four_thirds.jpg"
+    },
+    "image": {
+      "href":
+        "https://d32dm0rphc51dk.cloudfront.net/s6uPnejXg-bqiZStv0V-Jg/{image_version}.jpg",
+      "templated": true
+    },
+    "self": {
+      "href": "https://api.artsy.net/api/artists/4f552b2e3b55524170000054"
+    },
+    "permalink": { "href": "http://www.artsy.net/artist/bill-brandt" },
+    "artworks": {
+      "href":
+        "https://api.artsy.net/api/artworks?artist_id=4f552b2e3b55524170000054"
+    },
+    "published_artworks": {
+      "href":
+        "https://api.artsy.net/api/artworks?artist_id=4f552b2e3b55524170000054&published=true"
+    },
+    "similar_artists": {
+      "href":
+        "https://api.artsy.net/api/artists?similar_to_artist_id=4f552b2e3b55524170000054"
+    },
+    "similar_contemporary_artists": {
+      "href":
+        "https://api.artsy.net/api/artists?similar_to_artist_id=4f552b2e3b55524170000054&similarity_type=contemporary"
+    },
+    "genes": {
+      "href":
+        "https://api.artsy.net/api/genes?artist_id=4f552b2e3b55524170000054"
+    }
+  }
+}

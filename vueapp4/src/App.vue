@@ -11,6 +11,8 @@
 
 <script>
 import Card from '@/components/Card';
+import traverson from 'traverson';
+import JsonHalAdapter from 'traverson-hal';
 
 export default {
   name: 'App',
@@ -20,7 +22,9 @@ export default {
   data() {
     return {
       momaAPI_Url: '../static/momaartworks.json',
-      artsyAPI_Url: 'https://api.artsy.net/api/',
+      artsyAPI_Url: 'https://api.artsy.net/api',
+      postUrl: 'https://api.artsy.net/api/tokens/xapp_token',
+      xappToken: '',
       artworks: [],
       title: '',
       artist: [],
@@ -47,14 +51,15 @@ export default {
     };
   },
   mounted() {
-    this.getDataFromArtsty, this.getDataFromMoma();
+    this.getDataFromMoma();
+    this.postForTokenFromArtsy();
   },
   methods: {
     getDataFromMoma() {
       fetch(this.momaAPI_Url)
         .then(response => response.json())
         .then(response => {
-          let artworks = response.filter(artwork => {
+          const artworks = response.filter(artwork => {
             if (artwork.Department === 'Photography' && artwork.URL != null) {
               return artwork;
             }
@@ -71,7 +76,6 @@ export default {
             this.Date = artwork.Date;
             this.Medium = artwork.Medium;
             this.Dimensions = artwork.Dimensions;
-            // to be cCreditLine
             this.CreditLine = artwork.CreditLine;
             this.AccessionNumber = artwork.AccessionNumber;
             this.Classification = artwork.Classification;
@@ -85,13 +89,52 @@ export default {
             this.Height = artwork['Height_(cm)'];
             this.Width = artwork['Width_(cm)'];
           });
-          this.artworks = artworks.slice(11455, 11588);
+          this.artworks = artworks.slice(13455, 14088);
         });
     },
-    getDataFromArtsty() {
-      fetch(this.artsyAPI_Url)
+    postForTokenFromArtsy() {
+      const clientID = 'e7a553ede809b28975c5';
+      const clientSecret = '3958f90fe1ff54c8380e508aaf2966f9';
+      fetch(this.postUrl, {
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        }),
+        method: 'POST',
+        body: JSON.stringify({
+          client_id: clientID,
+          client_secret: clientSecret
+        })
+      })
         .then(response => response.json())
-        .then(response => console.log(response));
+        .then(response => {
+          this.xappToken = response.token;
+          console.log('xappToken', this.xappToken);
+          this.getDataFromArtsy();
+          // localStorage.setItem(this.xappToken, response.token);
+        })
+        .catch(err => console.log('Request failed', err));
+    },
+    getDataFromArtsy() {
+      traverson.registerMediaType(JsonHalAdapter.mediaType, JsonHalAdapter);
+      const api = traverson.from('https://api.artsy.net/api').jsonHal();
+
+      api
+        .newRequest()
+        .follow('artist')
+        .withRequestOptions({
+          headers: {
+            'X-Xapp-Token': this.xappToken,
+            Accept: 'application/vnd.artsy-v2+json'
+          }
+        })
+        .withTemplateParameters({ id: 'andy-warhol' })
+        .getResource((error, andyWarhol) => {
+          if (error) {
+            console.error(error);
+          } else {
+            console.log(JSON.stringify(document));
+          }
+        });
     }
   }
 };
@@ -102,4 +145,3 @@ export default {
   margin: 1vw;
 }
 </style>
-  

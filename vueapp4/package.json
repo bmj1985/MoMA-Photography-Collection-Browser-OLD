@@ -11,6 +11,11 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "isomorphic-fetch": "^2.2.1",
+    "tape": "^4.8.0",
+    "traverson": "^6.0.3",
+    "traverson-hal": "^6.0.0",
+    "traverson-promise": "0.0.9",
     "vue": "^2.5.2"
   },
   "devDependencies": {
