@@ -11,8 +11,9 @@
 
 <script>
 import Card from '@/components/Card';
-import traverson from 'traverson';
-import JsonHalAdapter from 'traverson-hal';
+import { getToken, getResource } from './lib/artsy';
+
+
 
 export default {
   name: 'App',
@@ -52,7 +53,8 @@ export default {
   },
   mounted() {
     this.getDataFromMoma();
-    this.postForTokenFromArtsy();
+    this.getToken();
+    this.getResource();
   },
   methods: {
     getDataFromMoma() {
@@ -92,50 +94,8 @@ export default {
           this.artworks = artworks.slice(13455, 14088);
         });
     },
-    postForTokenFromArtsy() {
-      const clientID = 'e7a553ede809b28975c5';
-      const clientSecret = '3958f90fe1ff54c8380e508aaf2966f9';
-      fetch(this.postUrl, {
-        headers: new Headers({
-          'Content-Type': 'application/json'
-        }),
-        method: 'POST',
-        body: JSON.stringify({
-          client_id: clientID,
-          client_secret: clientSecret
-        })
-      })
-        .then(response => response.json())
-        .then(response => {
-          this.xappToken = response.token;
-          console.log('xappToken', this.xappToken);
-          this.getDataFromArtsy();
-          // localStorage.setItem(this.xappToken, response.token);
-        })
-        .catch(err => console.log('Request failed', err));
-    },
-    getDataFromArtsy() {
-      traverson.registerMediaType(JsonHalAdapter.mediaType, JsonHalAdapter);
-      const api = traverson.from('https://api.artsy.net/api').jsonHal();
-
-      api
-        .newRequest()
-        .follow('artist')
-        .withRequestOptions({
-          headers: {
-            'X-Xapp-Token': this.xappToken,
-            Accept: 'application/vnd.artsy-v2+json'
-          }
-        })
-        .withTemplateParameters({ id: 'andy-warhol' })
-        .getResource((error, andyWarhol) => {
-          if (error) {
-            console.error(error);
-          } else {
-            console.log(JSON.stringify(document));
-          }
-        });
-    }
+    getToken(){},
+    getResource() {}
   }
 };
 </script>
