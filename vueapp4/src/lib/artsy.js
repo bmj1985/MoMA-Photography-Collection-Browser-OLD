@@ -1,8 +1,8 @@
-const traverson = require('traverson-promise');
-const JsonHalAdapter = require('traverson-hal');
-const fetch = require('isomorphic-fetch');
+// const traverson = require('traverson-promise');
+// const JsonHalAdapter = require('traverson-hal');
+// const fetch = require('isomorphic-fetch');
 
-traverson.registerMediaType(JsonHalAdapter.mediaType, JsonHalAdapter);
+// traverson.registerMediaType(JsonHalAdapter.mediaType, JsonHalAdapter);
 
 function getToken() {
   const clientID = 'e7a553ede809b28975c5';
@@ -25,21 +25,34 @@ function getToken() {
 }
 
 function getResource(token) {
-  const api = traverson.from('https://api.artsy.net/api').jsonHal();
+  // const api = traverson.from('https://api.artsy.net/api/artists/').jsonHal();
 
-  return api
-    .newRequest()
-    .follow('artist')
-    .withRequestOptions({
-      headers: {
-        'X-Xapp-Token': token,
-        Accept: 'application/vnd.artsy-v2+json'
-      }
-    })
-    .withTemplateParameters({
-      id: 'andy-warhol'
-    })
-    .getResource().result;
+  fetch(
+    'https://api.artsy.net/api/artists?similar_to_artist_id=4eeb62edee499500010021ba',
+    {
+      method: 'GET',
+      headers: new Headers({
+        'X-Xapp-Token': token
+      })
+    }
+  )
+    .then(response => response.json())
+    .then(response => {
+      console.log(response._embedded.artists[0].name);
+    });
 }
 
-export default { getToken, getResource };
+// return api
+//   .newRequest()
+//   .follow('artist')
+//   .withRequestOptions({
+//     headers: {
+//       'X-Xapp-Token': token,
+//       Accept: 'application/vnd.artsy-v2+json'
+//     }
+//   })
+//   .withTemplateParameters({ id: 'andy-warhol' })
+// .getResource().result;
+// }
+
+export { getToken, getResource };

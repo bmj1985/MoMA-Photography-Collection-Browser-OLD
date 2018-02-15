@@ -51,10 +51,14 @@ export default {
   },
   mounted() {
     this.getDataFromMoma();
-    getToken().then(token => {
-      this.token = token;
-      getResource(this.token);
-    });
+    getToken()
+      .then(token => {
+        this.token = token;
+        return getResource(this.token);
+      })
+      .then(results => {
+        console.log(results);
+      });
   },
   methods: {
     getDataFromMoma() {
@@ -91,7 +95,7 @@ export default {
             this.Height = artwork['Height_(cm)'];
             this.Width = artwork['Width_(cm)'];
           });
-          this.artworks = artworks.slice(13455, 14088);
+          this.artworks = artworks.slice(14308, 14309);
         });
     }
   }
