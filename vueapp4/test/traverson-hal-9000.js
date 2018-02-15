@@ -1,5 +1,6 @@
 const test = require('tape');
 const { getToken, getResource } = require('../src/lib/artsy');
+
 test('can get token', t => {
   t.plan(1);
   getToken().then(token => {

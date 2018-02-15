@@ -1,9 +1,8 @@
 const traverson = require('traverson-promise');
 const JsonHalAdapter = require('traverson-hal');
 const fetch = require('isomorphic-fetch');
-traverson.registerMediaType(JsonHalAdapter.mediaType, JsonHalAdapter);
 
-module.exports = { getResource, getToken };
+traverson.registerMediaType(JsonHalAdapter.mediaType, JsonHalAdapter);
 
 function getToken() {
   const clientID = 'e7a553ede809b28975c5';
@@ -42,3 +41,5 @@ function getResource(token) {
     })
     .getResource().result;
 }
+
+module.exports = { getResource, getToken };
