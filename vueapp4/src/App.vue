@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div id="app">
     <ul class="cardlist">
@@ -91,7 +92,6 @@ export default {
           });
           this.artworks = artworks.slice(13455, 14088);
         });
-    }
   }
 };
 </script>

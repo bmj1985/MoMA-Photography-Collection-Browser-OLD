@@ -1,4 +1,4 @@
-
+/* eslint-disable */
 <template>
   <v-card>
     <v-card-text>

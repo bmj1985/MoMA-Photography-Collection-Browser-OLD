@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
 <div class="wrapper">
   <div class="card border-primary mb-3" style="max-width: 20rem;"
