@@ -13,8 +13,6 @@
 import Card from '@/components/Card';
 import { getToken, getResource } from './lib/artsy';
 
-
-
 export default {
   name: 'App',
   components: {
@@ -53,8 +51,10 @@ export default {
   },
   mounted() {
     this.getDataFromMoma();
-    this.getToken();
-    this.getResource();
+    getToken().then(token => {
+      this.token = token;
+      getResource(this.token);
+    });
   },
   methods: {
     getDataFromMoma() {
@@ -93,9 +93,7 @@ export default {
           });
           this.artworks = artworks.slice(13455, 14088);
         });
-    },
-    getToken(){},
-    getResource() {}
+    }
   }
 };
 </script>
