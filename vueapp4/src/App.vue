@@ -11,9 +11,7 @@
 
 <script>
 import Card from '@/components/Card';
-import { getToken, getResource } from './lib/artsy';
-
-
+import { getResource, getToken } from './lib/artsy';
 
 export default {
   name: 'App',
@@ -23,9 +21,7 @@ export default {
   data() {
     return {
       momaAPI_Url: '../static/momaartworks.json',
-      artsyAPI_Url: 'https://api.artsy.net/api',
-      postUrl: 'https://api.artsy.net/api/tokens/xapp_token',
-      xappToken: '',
+      token: '',
       artworks: [],
       title: '',
       artist: [],
@@ -53,8 +49,11 @@ export default {
   },
   mounted() {
     this.getDataFromMoma();
-    this.getToken();
-    this.getResource();
+    getToken().then(token => {
+      this.token = token;
+      console.log(this.token);
+      getResource(this.token);
+    });
   },
   methods: {
     getDataFromMoma() {
@@ -93,9 +92,6 @@ export default {
           });
           this.artworks = artworks.slice(13455, 14088);
         });
-    },
-    getToken(){},
-    getResource() {}
   }
 };
 </script>

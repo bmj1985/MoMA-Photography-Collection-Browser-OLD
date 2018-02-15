@@ -1,9 +1,9 @@
+/* eslint-disable */
 const traverson = require('traverson-promise');
 const JsonHalAdapter = require('traverson-hal');
 const fetch = require('isomorphic-fetch');
-traverson.registerMediaType(JsonHalAdapter.mediaType, JsonHalAdapter);
 
-module.exports = { getToken, getResource };
+traverson.registerMediaType(JsonHalAdapter.mediaType, JsonHalAdapter);
 
 function getToken() {
   const clientID = 'e7a553ede809b28975c5';
@@ -20,6 +20,7 @@ function getToken() {
   })
     .then(response => response.json())
     .then(response => {
+      console.log(response.token);
       return response.token;
     })
     .catch(err => console.error('Request failed', err));
@@ -42,3 +43,5 @@ function getResource(token) {
     })
     .getResource().result;
 }
+
+export default { getToken, getResource };
