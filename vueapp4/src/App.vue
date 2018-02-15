@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       momaAPI_Url: '../static/momaartworks.json',
-      xappToken: '',
+      token: '',
       artworks: [],
       title: '',
       artist: [],
@@ -48,8 +48,11 @@ export default {
   },
   mounted() {
     this.getDataFromMoma();
-    this.getToken();
-    this.getResource();
+    getToken().then(token => {
+      this.token = token;
+      console.log(this.token);
+      getResource(this.token);
+    });
   },
   methods: {
     getDataFromMoma() {

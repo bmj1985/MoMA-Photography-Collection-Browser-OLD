@@ -1,3 +1,4 @@
+/* eslint-disable */
 const traverson = require('traverson-promise');
 const JsonHalAdapter = require('traverson-hal');
 const fetch = require('isomorphic-fetch');
@@ -19,6 +20,7 @@ function getToken() {
   })
     .then(response => response.json())
     .then(response => {
+      console.log(response.token);
       return response.token;
     })
     .catch(err => console.error('Request failed', err));
@@ -42,4 +44,4 @@ function getResource(token) {
     .getResource().result;
 }
 
-module.exports = { getResource, getToken };
+export default { getToken, getResource };
