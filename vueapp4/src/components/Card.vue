@@ -17,6 +17,7 @@
     <p>{{artwork.Date}}</p>
     <p @click="infoToggle = !infoToggle">Click here to see more information.</p>
     <div :class="{ hidden : infoToggle }">
+    <button v-on:click="getResource()">Button 4</button>
     <AttributeList :artwork="artwork"/>
     </div>
   </div>
@@ -26,7 +27,6 @@
 
 <script>
 import AttributeList from './AttributeList';
-import defaultDiacriticsRemovalMap from '../lib/diacritics';
 
 export default {
   name: 'Card',
@@ -35,28 +35,33 @@ export default {
   data() {
     return {
       infoToggle: true,
+      artsyUrl: '',
+      token: '',
       artistData: '',
       defaultDiacriticsRemovalMap: []
     };
   },
+  mounted () {
+    getResource()
+  },
   methods: {
-    removeDiacritics(string) {
-      let changes;
-      if (!changes) {
-        changes = defaultDiacriticsRemovalMap;
-      }
-      for (var i = 0; i < changes.length; i++) {
-        string = string.replace(changes[i].letters, changes[i].base);
-      }
-      this.artistData = string;
-      return string;
-    },
-    nameToUrl() {
-      console.log(this.artistData);
-      let filteredName = this.artistData.toLowerCase().replace(/\s/g, '-');
-      let url = 'https://api.artsy.net/api/artists/' + filteredName;
-      console.log(url);
-      return url;
+    getResource() {
+      console.log('Hello World');
+      console.log('2nd line');
+      this.artsyUrl = `https://api.artsy.net/api/search?q=${
+        this.artistData
+      }&type=artist`;
+      console.log(this.artsyUrl);
+      fetch(this.artsyUrl, {
+        method: 'GET',
+        headers: new Headers({
+          'X-Xapp-Token': localStorage.getItem('token')
+        })
+      })
+        .then(response => response.json())
+        .then(response => {
+          console.log(response._embedded.results[0]._links.self.href);
+        });
     }
   }
 };

@@ -9,7 +9,6 @@
  <div id="event-testing">
   <button v-on:click="getDataFromMoma()">Button 1</button>
   <button v-on:click="getToken()">Button 2</button>
-  <button v-on:click="getResource()">Button 4</button>
 </div>
   </div>
 </template>
@@ -27,7 +26,6 @@ export default {
     return {
       artistData: '',
       momaAPI_Url: '../static/momaartworks.json',
-      artsyUrl: '',
       token: '',
       artworks: [],
       title: '',
@@ -61,35 +59,11 @@ export default {
       fetch(this.momaAPI_Url)
         .then(response => response.json())
         .then(response => {
+          console.log(response);
           const artworks = response.filter(artwork => {
             if (artwork.Department === 'Photography' && artwork.URL != null) {
               return artwork;
             }
-          });
-          artworks.forEach(artwork => {
-            this.title = artwork.Title;
-            this.artist = artwork.Artist;
-            this.ConstituentID = artwork.ConstituentID;
-            this.ArtistBio = artwork.ArtistBio;
-            this.Nationality = artwork.Nationality;
-            this.BeginDate = artwork.BeginDate;
-            this.EndDate = artwork.EndDate;
-            this.Gender = artwork.Gender;
-            this.Date = artwork.Date;
-            this.Medium = artwork.Medium;
-            this.Dimensions = artwork.Dimensions;
-            this.CreditLine = artwork.CreditLine;
-            this.AccessionNumber = artwork.AccessionNumber;
-            this.Classification = artwork.Classification;
-            this.Department = artwork.Department;
-            this.DateAcquired = artwork.DateAcquired;
-            this.Cataloged = artwork.Cataloged;
-            this.ObjectID = artwork.ObjectID;
-            this.URL = artwork.URL;
-            this.Date = artwork.Date;
-            this.ThumbnailURL = artwork.ThumbnailURL;
-            this.Height = artwork['Height_(cm)'];
-            this.Width = artwork['Width_(cm)'];
           });
           this.artworks = artworks;
         });
@@ -109,23 +83,12 @@ export default {
       })
         .then(response => response.json())
         .then(response => {
+          localStorage.setItem('token', response.token);
           this.token = response.token;
           console.log(this.token);
           return response.token;
         })
         .catch(err => console.error('Request failed', err));
-    },
-    getResource(url) {
-      fetch(url, {
-        method: 'GET',
-        headers: new Headers({
-          'X-Xapp-Token': this.token
-        })
-      })
-        .then(response => response.json())
-        .then(response => {
-          console.log(response);
-        });
     }
   }
 };
