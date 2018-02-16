@@ -1,9 +1,3 @@
-// const traverson = require('traverson-promise');
-// const JsonHalAdapter = require('traverson-hal');
-// const fetch = require('isomorphic-fetch');
-
-// traverson.registerMediaType(JsonHalAdapter.mediaType, JsonHalAdapter);
-
 function getToken() {
   const clientID = 'e7a553ede809b28975c5';
   const clientSecret = '3958f90fe1ff54c8380e508aaf2966f9';
@@ -19,40 +13,45 @@ function getToken() {
   })
     .then(response => response.json())
     .then(response => {
+      set.localStorage('token', response.token);
       return response.token;
     })
     .catch(err => console.error('Request failed', err));
 }
 
-function getResource(token) {
-  // const api = traverson.from('https://api.artsy.net/api/artists/').jsonHal();
+function nameToUrl(artistName) {
+  XRegExp(artistName);
+  console.log(artistName);
+  let artist_name = artistName.toLowerCase().replace(/\s/g, '-');
+  let url = 'https://api.artsy.net/api/artists/' + artist_name;
+  console.log(url);
+  return url;
+}
 
-  fetch(
-    'https://api.artsy.net/api/artists?similar_to_artist_id=4eeb62edee499500010021ba',
-    {
-      method: 'GET',
-      headers: new Headers({
-        'X-Xapp-Token': token
-      })
-    }
-  )
+function getResource(url) {
+  fetch(url, {
+    method: 'GET',
+    headers: new Headers({
+      'X-Xapp-Token': get.localStorage('token')
+    })
+  })
     .then(response => response.json())
     .then(response => {
-      console.log(response._embedded.artists[0].name);
+      console.log(response);
     });
 }
 
-// return api
-//   .newRequest()
-//   .follow('artist')
-//   .withRequestOptions({
-//     headers: {
-//       'X-Xapp-Token': token,
-//       Accept: 'application/vnd.artsy-v2+json'
-//     }
-//   })
-//   .withTemplateParameters({ id: 'andy-warhol' })
-// .getResource().result;
+// function getDataFromMoma() {
+//   fetch('../static/momaartworks.json')
+//     .then(response => response.json())
+//     .then(response => {
+//       const artworks = response.filter(artwork => {
+//         if (artwork.Department === 'Photography' && artwork.URL !== null) {
+//           return artwork;
+//         }
+//       });
+//       return artworks;
+//     });
 // }
 
-export { getToken, getResource };
+export { getToken, getResource, nameToUrl };

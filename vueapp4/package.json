@@ -16,7 +16,9 @@
     "traverson": "^6.0.3",
     "traverson-hal": "^6.0.0",
     "traverson-promise": "0.0.9",
-    "vue": "^2.5.2"
+    "vue": "^2.5.2",
+    "vuejs-paginator": "^2.0.2",
+    "xregexp": "^4.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

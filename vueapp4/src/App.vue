@@ -1,17 +1,25 @@
 /* eslint-disable */
 <template>
-  <div id="app">
+<div id="app">
     <ul class="cardlist">
       <li class="cardlistitem">
-          <Card class="row" :artworks="artworks" :Medium="Medium"/>
+          <Card class="row" :artworks="artworks" :Medium="Medium"
+          :nameToUrl="nameToUrl"/>
       </li>
     </ul>
+ <div id="event-testing">
+  <button v-on:click="getDataFromMoma()">Button 1</button>
+  <button v-on:click="getToken()">Button 2</button>
+  <button v-on:click="nameToUrl(artist[0])">Button 3</button>
+  <button v-on:click="getResource()">Button 4</button>
+</div>
   </div>
 </template>
 
 <script>
 import Card from '@/components/Card';
-import { getToken, getResource } from './lib/artsy';
+import AttributeList from '@/components/AttributeList';
+import XRegExp from 'xregexp';
 
 export default {
   name: 'App',
@@ -21,9 +29,8 @@ export default {
   data() {
     return {
       momaAPI_Url: '../static/momaartworks.json',
-      artsyAPI_Url: 'https://api.artsy.net/api',
-      postUrl: 'https://api.artsy.net/api/tokens/xapp_token',
-      xappToken: '',
+      artsyUrl: '',
+      token: '',
       artworks: [],
       title: '',
       artist: [],
@@ -49,17 +56,10 @@ export default {
       Width: 0
     };
   },
-  mounted() {
-    this.getDataFromMoma();
-    getToken()
-      .then(token => {
-        this.token = token;
-        return getResource(this.token);
-      })
-      .then(results => {
-        console.log(results);
-      });
+  updated() {
+    nameToUrl();
   },
+  mounted() {},
   methods: {
     getDataFromMoma() {
       fetch(this.momaAPI_Url)
@@ -95,8 +95,49 @@ export default {
             this.Height = artwork['Height_(cm)'];
             this.Width = artwork['Width_(cm)'];
           });
-          this.artworks = artworks.slice(14308, 14309);
+          this.artworks = artworks;
         });
+    },
+    getToken() {
+      const clientID = 'e7a553ede809b28975c5';
+      const clientSecret = '3958f90fe1ff54c8380e508aaf2966f9';
+      return fetch('https://api.artsy.net/api/tokens/xapp_token', {
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        }),
+        method: 'POST',
+        body: JSON.stringify({
+          client_id: clientID,
+          client_secret: clientSecret
+        })
+      })
+        .then(response => response.json())
+        .then(response => {
+          this.token = response.token;
+          console.log(this.token);
+          return response.token;
+        })
+        .catch(err => console.error('Request failed', err));
+    },
+    getResource(url) {
+      fetch(url, {
+        method: 'GET',
+        headers: new Headers({
+          'X-Xapp-Token': this.token
+        })
+      })
+        .then(response => response.json())
+        .then(response => {
+          console.log(response);
+        });
+    },
+    nameToUrl(artistName) {
+      XRegExp(artistName);
+      console.log(artistName);
+      let artist_name = artistName.toLowerCase().replace(/\s/g, '-');
+      let url = 'https://api.artsy.net/api/artists/' + artist_name;
+      console.log(url);
+      return url;
     }
   }
 };
