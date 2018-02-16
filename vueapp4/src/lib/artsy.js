@@ -19,14 +19,14 @@ function getToken() {
     .catch(err => console.error('Request failed', err));
 }
 
-function nameToUrl(artistName) {
-  XRegExp(artistName);
-  console.log(artistName);
-  let artist_name = artistName.toLowerCase().replace(/\s/g, '-');
-  let url = 'https://api.artsy.net/api/artists/' + artist_name;
-  console.log(url);
-  return url;
-}
+// function nameToUrl(artistName) {
+//   XRegExp(artistName);
+//   console.log(artistName);
+//   let artist_name = artistName.toLowerCase().replace(/\s/g, '-');
+//   let url = 'https://api.artsy.net/api/artists/' + artist_name;
+//   console.log(url);
+//   return url;
+// }
 
 function getResource(url) {
   fetch(url, {

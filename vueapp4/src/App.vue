@@ -4,13 +4,12 @@
     <ul class="cardlist">
       <li class="cardlistitem">
           <Card class="row" :artworks="artworks" :Medium="Medium"
-          :nameToUrl="nameToUrl"/>
+          :nameToUrl="nameToUrl" :artistData="artistData"/>
       </li>
     </ul>
  <div id="event-testing">
   <button v-on:click="getDataFromMoma()">Button 1</button>
   <button v-on:click="getToken()">Button 2</button>
-  <button v-on:click="nameToUrl(artist[0])">Button 3</button>
   <button v-on:click="getResource()">Button 4</button>
 </div>
   </div>
@@ -19,6 +18,7 @@
 <script>
 import Card from '@/components/Card';
 import AttributeList from '@/components/AttributeList';
+import defaultDiacriticsRemovalMap from './lib/diacritics';
 import XRegExp from 'xregexp';
 
 export default {
@@ -28,6 +28,8 @@ export default {
   },
   data() {
     return {
+      defaultDiacriticsRemovalMap: [],
+      artistData: '',
       momaAPI_Url: '../static/momaartworks.json',
       artsyUrl: '',
       token: '',
@@ -56,9 +58,7 @@ export default {
       Width: 0
     };
   },
-  updated() {
-    nameToUrl();
-  },
+  updated() {},
   mounted() {},
   methods: {
     getDataFromMoma() {
@@ -130,14 +130,6 @@ export default {
         .then(response => {
           console.log(response);
         });
-    },
-    nameToUrl(artistName) {
-      XRegExp(artistName);
-      console.log(artistName);
-      let artist_name = artistName.toLowerCase().replace(/\s/g, '-');
-      let url = 'https://api.artsy.net/api/artists/' + artist_name;
-      console.log(url);
-      return url;
     }
   }
 };
