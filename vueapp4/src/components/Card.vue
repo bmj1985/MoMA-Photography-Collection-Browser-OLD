@@ -39,26 +39,6 @@ export default {
       token: localStorage.getItem('token'),
       artistData: ''
     };
-  },
-  methods: {
-    getResource() {
-      console.log('Hello World');
-      console.log('2nd line');
-      this.artsyUrl = `https://api.artsy.net/api/search?q=${
-        this.artistData
-      }&type=artist`;
-      console.log(this.artsyUrl);
-      fetch(this.artsyUrl, {
-        method: 'GET',
-        headers: new Headers({
-          'X-Xapp-Token': localStorage.getItem('token')
-        })
-      })
-        .then(response => response.json())
-        .then(response => {
-          console.log(response._embedded.results[0]._links.self.href);
-        });
-    }
   }
 };
 </script>
