@@ -3,8 +3,7 @@
 <div id="app">
     <ul class="cardlist">
       <li class="cardlistitem">
-          <Card class="row" :artworks="artworks" :Medium="Medium"
-          :nameToUrl="nameToUrl" :artistData="artistData"/>
+          <Card class="row" :artworks="artworks" :Medium="Medium"/>
       </li>
     </ul>
  <div id="event-testing">
@@ -18,8 +17,6 @@
 <script>
 import Card from '@/components/Card';
 import AttributeList from '@/components/AttributeList';
-import defaultDiacriticsRemovalMap from './lib/diacritics';
-import XRegExp from 'xregexp';
 
 export default {
   name: 'App',
@@ -28,7 +25,6 @@ export default {
   },
   data() {
     return {
-      defaultDiacriticsRemovalMap: [],
       artistData: '',
       momaAPI_Url: '../static/momaartworks.json',
       artsyUrl: '',
