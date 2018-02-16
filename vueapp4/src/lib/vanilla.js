@@ -13,34 +13,40 @@ function getToken() {
   })
     .then(response => response.json())
     .then(response => {
-      set.localStorage('token', response.token);
-      return response.token;
+      return localStorage.setItem('token', response.token);
     })
     .catch(err => console.error('Request failed', err));
 }
 
-// function nameToUrl(artistName) {
-//   XRegExp(artistName);
-//   console.log(artistName);
-//   let artist_name = artistName.toLowerCase().replace(/\s/g, '-');
-//   let url = 'https://api.artsy.net/api/artists/' + artist_name;
-//   console.log(url);
-//   return url;
-// }
-
-function getResource(url) {
-  fetch(url, {
+function getArtistUrl(input) {
+  artsyUrl = `https://api.artsy.net/api/search?q=${input}&type=artist`;
+  fetch(artsyUrl, {
     method: 'GET',
     headers: new Headers({
-      'X-Xapp-Token': get.localStorage('token')
+      'X-Xapp-Token': localStorage.getItem('token')
     })
   })
     .then(response => response.json())
     .then(response => {
-      console.log(response);
+      console.log(response._embedded.results[0]._links.self.href);
+      return response._embedded.results[0]._links.self.href;
     });
 }
 
+function getSimilarArtist(input) {
+  similarUrl = getArtistUrl(input);
+  console.log(similarUrl);
+  fetch(similarUrl, {
+    method: 'GET',
+    headers: new Headers({
+      'X-Xapp-Token': localStorage.getItem('token')
+    })
+  })
+    .then(response => response.json())
+    .then(response => {
+      return response._embedded.results[0]._links.self.href;
+    });
+}
 // function getDataFromMoma() {
 //   fetch('../static/momaartworks.json')
 //     .then(response => response.json())
@@ -54,4 +60,4 @@ function getResource(url) {
 //     });
 // }
 
-export { getToken, getResource, nameToUrl };
+export { getToken, getSimilarArtist };
