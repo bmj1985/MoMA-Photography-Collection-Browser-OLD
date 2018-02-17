@@ -19,7 +19,7 @@ function getToken() {
 }
 
 function getArtistUrl(input) {
-  artsyUrl = `https://api.artsy.net/api/search?q=${input}&type=artist`;
+  const artsyUrl = `https://api.artsy.net/api/search?q=${input}&type=artist`;
   fetch(artsyUrl, {
     method: 'GET',
     headers: new Headers({
@@ -28,15 +28,16 @@ function getArtistUrl(input) {
   })
     .then(response => response.json())
     .then(response => {
-      console.log(response._embedded.results[0]._links.self.href);
-      return response._embedded.results[0]._links.self.href;
-    });
+      const similarUrl = response._embedded.results[0]._links.self.href;
+      localStorage.setItem('similarUrl', similarUrl);
+      return similarUrl;
+    })
+    .catch(error => console.log(error.message));
 }
 
 function getSimilarArtist(input) {
-  similarUrl = getArtistUrl(input);
-  console.log(similarUrl);
-  fetch(similarUrl, {
+  getArtistUrl(input);
+  fetch(localStorage.getItem('similarUrl'), {
     method: 'GET',
     headers: new Headers({
       'X-Xapp-Token': localStorage.getItem('token')
@@ -44,9 +45,10 @@ function getSimilarArtist(input) {
   })
     .then(response => response.json())
     .then(response => {
-      return response._embedded.results[0]._links.self.href;
+      console.log(response);
     });
 }
+
 // function getDataFromMoma() {
 //   fetch('../static/momaartworks.json')
 //     .then(response => response.json())
@@ -60,4 +62,4 @@ function getSimilarArtist(input) {
 //     });
 // }
 
-export { getToken, getSimilarArtist };
+export { getToken, getArtistUrl, getSimilarArtist };

@@ -17,7 +17,7 @@
     <p>{{artwork.Date}}</p>
     <p @click="infoToggle = !infoToggle">Click here to see more information.</p>
     <div :class="{ hidden : infoToggle }">
-    <button v-on:click="getResource()">Button 4</button>
+    <button v-on:click="getSimilarArtist(artistData)">Button 4</button>
     <AttributeList :artwork="artwork"/>
     </div>
   </div>
@@ -27,6 +27,7 @@
 
 <script>
 import AttributeList from './AttributeList';
+import { getArtistUrl } from '../lib/vanilla';
 
 export default {
   name: 'Card',
@@ -35,10 +36,24 @@ export default {
   data() {
     return {
       infoToggle: true,
-      artsyUrl: '',
-      token: localStorage.getItem('token'),
-      artistData: ''
+      artistData: '',
+      artsyUrl: ''
     };
+  },
+  methods: {
+    getSimilarArtist(input) {
+      getArtistUrl(input);
+      fetch(localStorage.getItem('similarUrl'), {
+        method: 'GET',
+        headers: new Headers({
+          'X-Xapp-Token': localStorage.getItem('token')
+        })
+      })
+        .then(response => response.json())
+        .then(response => {
+          console.log(response);
+        });
+    }
   }
 };
 </script>

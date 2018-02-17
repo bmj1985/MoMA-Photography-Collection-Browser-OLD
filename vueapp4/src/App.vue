@@ -12,7 +12,7 @@
 <script>
 import Card from '@/components/Card';
 import AttributeList from '@/components/AttributeList';
-import { getToken, getSimilarArtist } from './lib/vanilla';
+import { getToken } from './lib/vanilla';
 
 export default {
   name: 'App',
