@@ -29,6 +29,7 @@ function getArtistUrl(input) {
     .then(response => response.json())
     .then(response => {
       const similarUrl = response._embedded.results[0]._links.self.href;
+      console.log(similarUrl);
       localStorage.setItem('similarUrl', similarUrl);
       return similarUrl;
     })

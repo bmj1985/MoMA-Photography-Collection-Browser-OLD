@@ -2,7 +2,7 @@
 <template>
 <div class="wrapper">
   <div class="card border-primary mb-3" style="max-width: 20rem;"
-  v-for="artwork in artworks.slice(0,10)" :key="artwork.ObjectID" >
+  v-for="artwork in artworks.slice(8245,8255)" :key="artwork.ObjectID" >
   <div class="card-header">
     {{artwork.Medium}}
     </div>
@@ -17,7 +17,7 @@
     <p>{{artwork.Date}}</p>
     <p @click="infoToggle = !infoToggle">Click here to see more information.</p>
     <div :class="{ hidden : infoToggle }">
-    <button v-on:click="getSimilarArtist(artistData)">Button 4</button>
+    <button v-on:click="getArtsyArtistId(artistData)">Button 4</button>
     <AttributeList :artwork="artwork"/>
     </div>
   </div>
@@ -37,11 +37,22 @@ export default {
     return {
       infoToggle: true,
       artistData: '',
-      artsyUrl: ''
+      artsyUrl: '',
+      artsyArtistId: ''
     };
   },
   methods: {
-    getSimilarArtist(input) {
+    fetchSimilarArtists() {
+      fetch(this.artsyArtistId, {
+        method: 'GET',
+        headers: new Headers({
+          'X-Xapp-Token': localStorage.getItem('token')
+        })
+      })
+        .then(response => response.json())
+        .then(response => console.log(response));
+    },
+    getArtsyArtistId(input) {
       getArtistUrl(input);
       fetch(localStorage.getItem('similarUrl'), {
         method: 'GET',
@@ -51,8 +62,11 @@ export default {
       })
         .then(response => response.json())
         .then(response => {
-          console.log(response);
-        });
+          this.artsyArtistId = response.id;
+          console.log(this.artsyArtistId);
+          fetchSimilarArtists();
+        })
+        .catch(error => console.log(error.message));
     }
   }
 };
