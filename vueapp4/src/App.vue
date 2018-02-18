@@ -12,7 +12,7 @@
 <script>
 import Card from '@/components/Card';
 import AttributeList from '@/components/AttributeList';
-import { getToken } from './lib/vanilla';
+// import { getToken } from './lib/vanilla';
 
 export default {
   name: 'App',
@@ -33,10 +33,14 @@ export default {
       .then(response => {
         console.log(response);
         const artworks = response.filter(artwork => {
-          if (artwork.Department === 'Photography' && artwork.URL != null) {
+          if (
+            artwork.Department === 'Photography' &&
+            artwork.ThumbnailURL != null
+          ) {
             return artwork;
           }
         });
+        console.log(this.artworks);
         this.artworks = artworks;
       })
       .then(getToken);

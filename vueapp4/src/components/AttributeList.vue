@@ -15,7 +15,7 @@
     <p>{{artwork.Department}}</p>
     <p>Acquisition Date: {{artwork.DateAcquired}}</p>
     <p>{{artwork.Cataloged}}</p>
-    <p>{{artwork.ObjectID}}</p>
+    <p>ObjectID: {{artwork.ObjectID}}</p>
     <p><a :href="artwork.URL" target="_blank">Link to Moma Official Page</a></p>
     <p><a :href="artwork.ThumbnailURL" target="_blank">Link to Thumbnail</a></p>
     <p>{{artwork.Height}}</p>

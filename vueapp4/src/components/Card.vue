@@ -2,7 +2,7 @@
 <template>
 <div class="wrapper">
   <div class="card border-primary mb-3" style="max-width: 20rem;"
-  v-for="artwork in artworks.slice(8245,8255)" :key="artwork.ObjectID" >
+  v-for="artwork in artworks.slice(9800,9900)" :key="artwork.ObjectID" >
   <div class="card-header">
     {{artwork.Medium}}
     </div>
@@ -38,6 +38,9 @@ export default {
   props: ['artworks'],
   data() {
     return {
+      xappToken:
+        // eslint-disable-next-line
+        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6IiIsImV4cCI6MTUxOTUxMTUxOCwiaWF0IjoxNTE4OTA2NzE4LCJhdWQiOiI1YTdkZjRlMmIyMDJhMzJmZGM2NWExZGUiLCJpc3MiOiJHcmF2aXR5IiwianRpIjoiNWE4OGFkNWU5YzE4ZGIzN2E5NzQ2ZTg3In0.NNjM3nHvQd5Rm2Gs2zGHwKWPuBnZ8ZsrbijlhZx8c9U',
       infoToggle: true,
       artistData: '',
       artsyUrl: '',
@@ -50,7 +53,7 @@ export default {
       fetch(this.artsyArtistId, {
         method: 'GET',
         headers: new Headers({
-          'X-Xapp-Token': localStorage.getItem('token')
+          'X-Xapp-Token': this.xappToken
         })
       })
         .then(response => response.json())
@@ -61,7 +64,7 @@ export default {
       fetch(localStorage.getItem('similarUrl'), {
         method: 'GET',
         headers: new Headers({
-          'X-Xapp-Token': localStorage.getItem('token')
+          'X-Xapp-Token': this.xappToken
         })
       })
         .then(response => response.json())
@@ -74,7 +77,7 @@ export default {
           fetch(similarArtistUrl, {
             method: 'GET',
             headers: new Headers({
-              'X-Xapp-Token': localStorage.getItem('token')
+              'X-Xapp-Token': this.xappToken
             })
           })
             .then(response => response.json())
