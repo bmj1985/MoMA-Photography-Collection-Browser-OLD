@@ -1,48 +1,55 @@
-function getToken() {
-  const clientID = 'e7a553ede809b28975c5';
-  const clientSecret = '3958f90fe1ff54c8380e508aaf2966f9';
-  return fetch('https://api.artsy.net/api/tokens/xapp_token', {
-    headers: new Headers({
-      'Content-Type': 'application/json'
-    }),
-    method: 'POST',
-    body: JSON.stringify({
-      client_id: clientID,
-      client_secret: clientSecret
-    })
-  })
-    .then(response => response.json())
-    .then(response => {
-      return localStorage.setItem('token', response.token);
-    })
-    .catch(err => console.error('Request failed', err));
-}
+// Function Gets Token From Artsy
+// function getToken() {
+//   const clientID = 'e7a553ede809b28975c5';
+//   const clientSecret = '3958f90fe1ff54c8380e508aaf2966f9';
+//   return fetch('https://api.artsy.net/api/tokens/xapp_token', {
+//     headers: new Headers({
+//       'Content-Type': 'application/json'
+//     }),
+//     method: 'POST',
+//     body: JSON.stringify({
+//       client_id: clientID,
+//       client_secret: clientSecret
+//     })
+//   })
+//     .then(response => response.json())
+//     .then(response => {
+//       return localStorage.setItem('token', response.token);
+//     })
+//     .catch(err => console.error('Request failed', err));
+// }
 
+// Function
 function getArtistUrl(input) {
-  const xappToken = 
+  const xappToken =
+    // es-lint next-line
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6IiIsImV4cCI6MTUxOTUxMTUxOCwiaWF0IjoxNTE4OTA2NzE4LCJhdWQiOiI1YTdkZjRlMmIyMDJhMzJmZGM2NWExZGUiLCJpc3MiOiJHcmF2aXR5IiwianRpIjoiNWE4OGFkNWU5YzE4ZGIzN2E5NzQ2ZTg3In0.NNjM3nHvQd5Rm2Gs2zGHwKWPuBnZ8ZsrbijlhZx8c9U';
   const artsyUrl = `https://api.artsy.net/api/search?q=${input}&type=artist`;
   fetch(artsyUrl, {
     method: 'GET',
     headers: new Headers({
-      'X-Xapp-Token': localStorage.getItem('token')
+      'X-Xapp-Token': xappToken
     })
   })
     .then(response => response.json())
     .then(response => {
-      const similarUrl = response._embedded.results[0]._links.self.href;
-      console.log(similarUrl);
-      localStorage.setItem('similarUrl', similarUrl);
-      return similarUrl;
+      const artistUrl = response._embedded.results[0]._links.self.href;
+      localStorage.setItem('artistUrl', artistUrl);
+      console.log(artistUrl);
+      return artistUrl;
     })
     .catch(error => console.log(error.message));
 }
 
 function getSimilarArtist(input) {
+  const xappToken =
+    // es-lint next-line
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6IiIsImV4cCI6MTUxOTUxMTUxOCwiaWF0IjoxNTE4OTA2NzE4LCJhdWQiOiI1YTdkZjRlMmIyMDJhMzJmZGM2NWExZGUiLCJpc3MiOiJHcmF2aXR5IiwianRpIjoiNWE4OGFkNWU5YzE4ZGIzN2E5NzQ2ZTg3In0.NNjM3nHvQd5Rm2Gs2zGHwKWPuBnZ8ZsrbijlhZx8c9U';
   getArtistUrl(input);
-  fetch(localStorage.getItem('similarUrl'), {
+  fetch(localStorage.getItem('artistUrl'), {
     method: 'GET',
     headers: new Headers({
-      'X-Xapp-Token': localStorage.getItem('token')
+      'X-Xapp-Token': xappToken
     })
   })
     .then(response => response.json())
@@ -64,4 +71,4 @@ function getSimilarArtist(input) {
 //     });
 // }
 
-export { getToken, getArtistUrl, getSimilarArtist };
+export { getToken, getArtistUrl };

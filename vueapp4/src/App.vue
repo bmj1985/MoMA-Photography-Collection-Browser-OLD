@@ -31,7 +31,6 @@ export default {
     fetch(this.momaAPI_Url)
       .then(response => response.json())
       .then(response => {
-        console.log(response);
         const artworks = response.filter(artwork => {
           if (
             artwork.Department === 'Photography' &&
@@ -40,10 +39,9 @@ export default {
             return artwork;
           }
         });
-        console.log(this.artworks);
         this.artworks = artworks;
-      })
-      .then(getToken);
+      });
+    // .then(getToken);
   }
 };
 </script>

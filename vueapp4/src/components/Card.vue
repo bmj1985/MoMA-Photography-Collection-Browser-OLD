@@ -2,15 +2,12 @@
 <template>
 <div class="wrapper">
   <div class="card border-primary mb-3" style="max-width: 20rem;"
-  v-for="artwork in artworks.slice(9800,9900)" :key="artwork.ObjectID" >
+  v-for="artwork in artworks.slice(5800,5810)" :key="artwork.ObjectID" >
   <div class="card-header">
     {{artwork.Medium}}
     </div>
   <div class="card-body text-primary">
-    <input type="radio" id="one" :value="artwork.Artist[0]" v-model="artistData">
-<label for="one">Click here to get similar artist.</label>
-<ul v-for="artist in similarArtist">
-  <li>{{artist.name}}</li>
+  <li>{{artwork.name}}</li>
 </ul>
     <h4 class="card-title">
       {{artwork.Artist[0]}}
@@ -20,8 +17,8 @@
     <p>{{artwork.Date}}</p>
     <p @click="infoToggle = !infoToggle">Click here to see more information.</p>
     <div :class="{ hidden : infoToggle }">
-    <button v-on:click="getArtsyArtistId(artistData)">Button 4</button>
     <AttributeList :artwork="artwork"/>
+    <SimilarArtist :artwork="artwork"></SimilarArtist>
     </div>
   </div>
 </div>
@@ -30,11 +27,12 @@
 
 <script>
 import AttributeList from './AttributeList';
-import { getArtistUrl } from '../lib/vanilla';
+import SimilarArtist from './SimilarArtist';
+// import { getArtistUrl } from '../lib/vanilla';
 
 export default {
   name: 'Card',
-  components: { AttributeList },
+  components: { AttributeList, SimilarArtist },
   props: ['artworks'],
   data() {
     return {
@@ -47,49 +45,6 @@ export default {
       artsyArtistId: '',
       similarArtist: []
     };
-  },
-  methods: {
-    fetchSimilarArtists() {
-      fetch(this.artsyArtistId, {
-        method: 'GET',
-        headers: new Headers({
-          'X-Xapp-Token': this.xappToken
-        })
-      })
-        .then(response => response.json())
-        .then(response => console.log(response));
-    },
-    getArtsyArtistId(input) {
-      getArtistUrl(input);
-      fetch(localStorage.getItem('similarUrl'), {
-        method: 'GET',
-        headers: new Headers({
-          'X-Xapp-Token': this.xappToken
-        })
-      })
-        .then(response => response.json())
-        .then(response => {
-          this.artsyArtistId = response.id;
-          console.log(this.artsyArtistId);
-          let similarArtistUrl = `https://api.artsy.net/api/artists?similar_to_artist_id=${
-            this.artsyArtistId
-          }`;
-          fetch(similarArtistUrl, {
-            method: 'GET',
-            headers: new Headers({
-              'X-Xapp-Token': this.xappToken
-            })
-          })
-            .then(response => response.json())
-            .then(response => {
-              response._embedded.artists.forEach(artist => {
-                console.log(artist.name);
-              });
-              this.similarArtist = response._embedded.artists;
-            });
-        })
-        .catch(error => console.log(error.message));
-    }
   }
 };
 </script>
