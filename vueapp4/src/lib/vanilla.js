@@ -19,6 +19,7 @@ function getToken() {
 }
 
 function getArtistUrl(input) {
+  const xappToken = 
   const artsyUrl = `https://api.artsy.net/api/search?q=${input}&type=artist`;
   fetch(artsyUrl, {
     method: 'GET',
