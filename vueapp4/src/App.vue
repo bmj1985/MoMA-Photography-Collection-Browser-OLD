@@ -38,7 +38,8 @@ export default {
           }
         });
         this.artworks = artworks;
-      });
+      })
+      .then(getToken);
   }
 };
 </script>

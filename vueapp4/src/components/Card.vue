@@ -9,6 +9,9 @@
   <div class="card-body text-primary">
     <input type="radio" id="one" :value="artwork.Artist[0]" v-model="artistData">
 <label for="one">Click here to get similar artist.</label>
+<ul v-for="artist in similarArtist">
+  <li>{{artist.name}}</li>
+</ul>
     <h4 class="card-title">
       {{artwork.Artist[0]}}
       </h4>
@@ -38,7 +41,8 @@ export default {
       infoToggle: true,
       artistData: '',
       artsyUrl: '',
-      artsyArtistId: ''
+      artsyArtistId: '',
+      similarArtist: []
     };
   },
   methods: {
@@ -64,7 +68,22 @@ export default {
         .then(response => {
           this.artsyArtistId = response.id;
           console.log(this.artsyArtistId);
-          fetchSimilarArtists();
+          let similarArtistUrl = `https://api.artsy.net/api/artists?similar_to_artist_id=${
+            this.artsyArtistId
+          }`;
+          fetch(similarArtistUrl, {
+            method: 'GET',
+            headers: new Headers({
+              'X-Xapp-Token': localStorage.getItem('token')
+            })
+          })
+            .then(response => response.json())
+            .then(response => {
+              response._embedded.artists.forEach(artist => {
+                console.log(artist.name);
+              });
+              this.similarArtist = response._embedded.artists;
+            });
         })
         .catch(error => console.log(error.message));
     }
