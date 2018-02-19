@@ -1,23 +1,28 @@
 /* eslint-disable */
 <template>
 <div id="app">
+  <Sidebar class="sidebar"/>
+  <div>
     <ul class="cardlist">
       <li class="cardlistitem">
           <Card class="row" :artworks="artworks"/>
       </li>
     </ul>
+    </div>
 </div>
 </template>
 
 <script>
 import Card from '@/components/Card';
+import Sidebar from '@/components/Sidebar';
 import AttributeList from '@/components/AttributeList';
-// import { getToken } from './lib/vanilla';
+import { getToken } from './lib/vanilla';
 
 export default {
   name: 'App',
   components: {
-    Card
+    Card,
+    Sidebar
   },
   data() {
     return {
@@ -40,14 +45,23 @@ export default {
           }
         });
         this.artworks = artworks;
-      });
-    // .then(getToken);
+      })
+      .then(getToken());
   }
 };
 </script>
 
 <style>
+#app {
+  display: flex;
+}
 .card {
   margin: 1vw;
+}
+
+.sidebar {
+  align-items: flex-start;
+  width: 20vw;
+  margin: 20px;
 }
 </style>

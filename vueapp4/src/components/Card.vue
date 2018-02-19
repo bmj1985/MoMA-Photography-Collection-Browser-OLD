@@ -2,7 +2,7 @@
 <template>
 <div class="wrapper">
   <div class="card border-primary mb-3" style="max-width: 20rem;"
-  v-for="artwork in artworks.slice(5800,5810)" :key="artwork.ObjectID" >
+  v-for="artwork in artworks.slice(5678,5688)" :key="artwork.ObjectID" >
   <div class="card-header">
     {{artwork.Medium}}
     </div>
@@ -18,7 +18,7 @@
     <p @click="infoToggle = !infoToggle">Click here to see more information.</p>
     <div :class="{ hidden : infoToggle }">
     <AttributeList :artwork="artwork"/>
-    <SimilarArtist :artwork="artwork"></SimilarArtist>
+    <!-- <SimilarArtist :artwork="artwork"></SimilarArtist> -->
     </div>
   </div>
 </div>

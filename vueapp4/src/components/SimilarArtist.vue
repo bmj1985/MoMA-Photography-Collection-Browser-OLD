@@ -2,7 +2,7 @@
 <template>
   <div>
     <div>
-    <h4 v-for="similarArtist in similarArtists">Similar Artists</h4>
+    <h4 v-for="similarArtist in similarArtists" :key="similarArtist.id">Similar Artists</h4>
     <ul>
       <li>{{similarArtist.name}}</li>
     </ul>
@@ -36,16 +36,16 @@ export default {
     };
   },
   methods: {
-    // fetchSimilarArtists() {
-    //   fetch(this.artsyArtistId, {
-    //     method: 'GET',
-    //     headers: new Headers({
-    //       'X-Xapp-Token': this.xappToken
-    //     })
-    //   })
-    //     .then(response => response.json())
-    //     .then(response => console.log(response));
-    // },
+    fetchSimilarArtists() {
+      fetch(this.artsyArtistId, {
+        method: 'GET',
+        headers: new Headers({
+          'X-Xapp-Token': this.xappToken
+        })
+      })
+        .then(response => response.json())
+        .then(response => console.log(response));
+    },
     getArtsyArtistId() {
       getArtistUrl('Josef Koudelka');
       fetch(localStorage.getItem('artistUrl'), {
