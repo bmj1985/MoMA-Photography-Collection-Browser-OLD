@@ -1,6 +1,7 @@
 /* eslint-disable */
 <template>
   <div>
+    <h2>MOMA Photography Collection Browser</h2>
 <form>
   <fieldset>
     <legend>Date Range</legend>
@@ -14,11 +15,10 @@
              <input class="slider" id="slider2" type="range" min="1839" max="2018" step="10"/>
       </div>
       </div>
-       
     <fieldset class="form-group">
       <legend>Print Type</legend>
       <div class="form-check">
-        <h6>Gelatin Silver and related processes</h6>
+        <h6>Gelatin Silver</h6>
         <label class="form-check-label">
           <input class="form-check-input" value="" type="checkbox">
           Gelatin Silver
@@ -185,6 +185,10 @@
         </label>
       </div>
   </fieldset>
+  <div class="form-group">
+  <label class="col-form-label" for="inputDefault">Search:</label>
+  <input class="form-control" placeholder="Search criteria" id="inputDefault" type="text">
+</div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </fieldset>
 </form>
@@ -193,7 +197,18 @@
 
 <script>
 export default {
-  name: 'Sidebar'
+  name: 'Sidebar',
+  props: ['artworks'],
+  computed: {
+    // filterDaguerreotype() {
+    //   let daguerreotype = this.artworks.filter(artwork => {
+    //     artwork.Medium.toLowerCase().includes('daguerreotype');
+    //     return true;
+    //   });
+    //   return daguerreotype;
+    //   daguerreotype = this.artworks;
+    // }
+  }
 };
 </script>
 

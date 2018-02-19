@@ -1,7 +1,7 @@
 /* eslint-disable */
 <template>
 <div id="app">
-  <Sidebar class="sidebar"/>
+  <Sidebar class="sidebar" :artworks="artworks"/>
   <div>
     <ul class="cardlist">
       <li class="cardlistitem">
@@ -15,7 +15,6 @@
 <script>
 import Card from '@/components/Card';
 import Sidebar from '@/components/Sidebar';
-import AttributeList from '@/components/AttributeList';
 import { getToken } from './lib/vanilla';
 
 export default {
@@ -63,5 +62,9 @@ export default {
   align-items: flex-start;
   width: 20vw;
   margin: 20px;
+}
+
+li {
+  list-style-type: none;
 }
 </style>

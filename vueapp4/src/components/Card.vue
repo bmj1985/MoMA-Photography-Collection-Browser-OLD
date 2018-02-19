@@ -7,15 +7,16 @@
     {{artwork.Medium}}
     </div>
   <div class="card-body text-primary">
+    <ul>
   <li>{{artwork.name}}</li>
-</ul>
+  </ul>
     <h4 class="card-title">
       {{artwork.Artist[0]}}
       </h4>
     <img class="image" :src="artwork.ThumbnailURL" alt="">
     <p>{{artwork.Title}}</p>
     <p>{{artwork.Date}}</p>
-    <p @click="infoToggle = !infoToggle">Click here to see more information.</p>
+    <p class="togglearrow" @click="infoToggle = !infoToggle">&#9660;</p>
     <div :class="{ hidden : infoToggle }">
     <AttributeList :artwork="artwork"/>
     <!-- <SimilarArtist :artwork="artwork"></SimilarArtist> -->
@@ -50,10 +51,18 @@ export default {
 </script>
 
 <style scoped>
+.card-body {
+  display: flex;
+  flex-direction: column;
+}
 .image {
-  align-items: center;
+  align-self: center;
 }
 .hidden {
   display: none;
+}
+
+.togglearrow {
+  text-align: right;
 }
 </style>

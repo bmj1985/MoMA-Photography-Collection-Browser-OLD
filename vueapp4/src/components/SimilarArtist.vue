@@ -44,6 +44,7 @@ export default {
         })
       })
         .then(response => response.json())
+        // eslint-disable-next-line
         .then(response => console.log(response));
     },
     getArtsyArtistId() {
@@ -54,11 +55,10 @@ export default {
           'X-Xapp-Token': this.xappToken
         })
       })
-        .then(response => response.json())
-        .then(response => {
-          console.log(response.id);
-          this.artsyArtistId = response.id;
-          let similarArtistUrl = `https://api.artsy.net/api/artists?similar_to_artist_id=${
+        .then(idResponse => idResponse.json())
+        .then(idResponse => {
+          this.artsyArtistId = idResponse.id;
+          const similarArtistUrl = `https://api.artsy.net/api/artists?similar_to_artist_id=${
             this.artsyArtistId
           }`;
           fetch(similarArtistUrl, {
@@ -69,10 +69,10 @@ export default {
           })
             .then(response => response.json())
             .then(response => {
-              console.log(response._embedded.artists);
               this.similarArtists = response._embedded.artists;
             });
         })
+        // eslint-disable-next-line
         .catch(error => console.log(error.message));
     }
   },
