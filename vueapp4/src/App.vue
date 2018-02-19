@@ -43,10 +43,13 @@ export default {
             return artwork;
           }
         });
-        this.artworks = artworks;
+        console.log(artworks);
+        this.artworks = artworks.slice(0, 50);
+        console.log(this.artworks);
       })
       .then(getToken());
-  }
+  },
+  methods: {}
 };
 </script>
 

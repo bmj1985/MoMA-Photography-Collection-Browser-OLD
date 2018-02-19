@@ -1,8 +1,7 @@
 /* eslint-disable */
 <template>
 <div class="wrapper">
-  <div class="card border-primary mb-3" style="max-width: 20rem;"
-  v-for="artwork in artworks.slice(5678,5688)" :key="artwork.ObjectID" >
+  <div class="card border-primary mb-3" style="max-width: 20rem;" v-for="artwork in artworks.slice(0,50)" :key="artwork.ObjectID">
   <div class="card-header">
     {{artwork.Medium}}
     </div>
@@ -19,7 +18,7 @@
     <p class="togglearrow" @click="infoToggle = !infoToggle">&#9660;</p>
     <div :class="{ hidden : infoToggle }">
     <AttributeList :artwork="artwork"/>
-    <!-- <SimilarArtist :artwork="artwork"></SimilarArtist> -->
+    <SimilarArtist :artwork="artwork"></SimilarArtist>
     </div>
   </div>
 </div>
@@ -29,7 +28,7 @@
 <script>
 import AttributeList from './AttributeList';
 import SimilarArtist from './SimilarArtist';
-// import { getArtistUrl } from '../lib/vanilla';
+import { getArtistUrl } from '../lib/vanilla';
 
 export default {
   name: 'Card',
@@ -64,5 +63,9 @@ export default {
 
 .togglearrow {
   text-align: right;
+}
+#toolong {
+  font-size: 5rem;
+  text-align: center;
 }
 </style>

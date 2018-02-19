@@ -100,7 +100,7 @@
       </div>
       <div class="form-check">
         <label class="form-check-label">
-          <input class="form-check-input" value=""  type="checkbox">
+          <input class="form-check-input" value=""  type="checkbox" @click="filterDaguerreotype()">
           Daguerreotype
         </label>
       </div>
@@ -192,6 +192,12 @@
     <button type="submit" class="btn btn-primary">Submit</button>
   </fieldset>
 </form>
+<a href="http://dx.doi.org/10.5281/zenodo.1163802"
+rel="nofollow"><img id="momaattribution" src="https://camo.githubusercontent.com/
+7ea321b31bf12352ff70f2f5dc672e82208b2738/68747470733a2f2f7a6
+56e6f646f2e6f72672f62616467652f646f692f31302e353238312f7a656e6f646f2e313136333830322e737667"
+alt="DOI" data-canonical-src="https://zenodo.org/badge/doi/10.5281/zenodo.1163802.svg"
+ style="max-width:100%;"></a>
   </div>
 </template>
 
@@ -199,15 +205,19 @@
 export default {
   name: 'Sidebar',
   props: ['artworks'],
+  data() {
+    return {
+      daguerreotype: []
+    };
+  },
   computed: {
-    // filterDaguerreotype() {
-    //   let daguerreotype = this.artworks.filter(artwork => {
-    //     artwork.Medium.toLowerCase().includes('daguerreotype');
-    //     return true;
-    //   });
-    //   return daguerreotype;
-    //   daguerreotype = this.artworks;
-    // }
+    filterDaguerreotype() {
+      let daguerreotype = this.artworks.filter(artwork => {
+        console.log(artwork.Medium);
+        return artwork.Medium.startsWith('Daguerreotype');
+      });
+      return daguerreotype;
+    }
   }
 };
 </script>
@@ -219,5 +229,8 @@ export default {
 
 h6 {
   margin: 8px;
+}
+#momaattribution {
+  margin: 30px 0px 10px 0px;
 }
 </style>
