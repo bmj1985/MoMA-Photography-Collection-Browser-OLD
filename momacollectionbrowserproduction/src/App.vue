@@ -44,14 +44,12 @@
 <script>
 import Card from '@/components/Card';
 import Sidebar from '@/components/Sidebar';
-import SimilarArtist from '@/components/SimilarArtist';
 
 export default {
   name: 'App',
   components: {
     Card,
-    Sidebar,
-    SimilarArtist
+    Sidebar
   },
   data() {
     return {

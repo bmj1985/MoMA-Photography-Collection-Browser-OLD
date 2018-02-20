@@ -18,6 +18,7 @@
     <p>{{artwork.Date}}</p>
     <p class="togglearrow" @click="infoToggle = !infoToggle">&#9660;</p>
     <AttributeList :artwork="artwork" :class="{ hidden : infoToggle }"/>
+    <SimilarArtist :artwork="artwork"></SimilarArtist>
   </div>
   </div v-else-if>
   <v-else class="card border-primary mb-3" style="max-width: 20rem;" v-for="artwork in mutatedArtworks.slice(0,99)" :key="artwork.ObjectID">
@@ -36,6 +37,7 @@
     <p>{{artwork.Date}}</p>
     <p class="togglearrow" @click="infoToggle = !infoToggle">&#9660;</p>
     <AttributeList :artwork="artwork" :class="{ hidden : infoToggle }"/>
+    <SimilarArtist :artwork="artwork"></SimilarArtist>
   </div>
   </v-else>
 </div>
@@ -43,10 +45,11 @@
 
 <script>
 import AttributeList from './AttributeList';
+import SimilarArtist from './SimilarArtist';
 
 export default {
   name: 'Card',
-  components: { AttributeList },
+  components: { AttributeList, SimilarArtist },
   props: ['mutatedArtworks', 'artworks'],
   data() {
     return {
