@@ -27,12 +27,15 @@ export default {
       artsyArtistId: '',
       similarArtists: [],
       artistName: '',
-      similarArtistUrl: ''
+      similarArtistUrl: '',
+      artistUrl: ''
     };
   },
   methods: {
-    getArtistUrl(input) {
-      const artsyUrl = `https://api.artsy.net/api/search?q=${input}&type=artist`;
+    getArtistUrl() {
+      const artsyUrl = `https://api.artsy.net/api/search?q=${
+        this.artwork.Artist[0]
+      }&type=artist`;
       fetch(artsyUrl, {
         method: 'GET',
         headers: new Headers({
@@ -41,16 +44,16 @@ export default {
       })
         .then(response => response.json())
         .then(response => {
-          const artistUrl = response._embedded.results[0]._links.self.href;
-          localStorage.setItem('artistUrl', artistUrl);
-          return artistUrl;
+          this.artistUrl = response._embedded.results[0]._links.self.href;
+          console.log(this.artistUrl);
         })
         // eslint-disable-next-line
         .catch(error => console.log(error.message));
     },
     getArtsyArtistId() {
-      this.getArtistUrl(this.artwork.Artist[0]);
-      fetch(localStorage.getItem('artistUrl'), {
+      console.log(this.artistUrl);
+      this.getArtistUrl();
+      fetch(this.artistUrl, {
         method: 'GET',
         headers: new Headers({
           'X-Xapp-Token': this.xappToken
@@ -59,6 +62,7 @@ export default {
         .then(response => response.json())
         .then(response => {
           this.artsyArtistId = response.id;
+          console.log(this.artsyArtistId);
         })
         // eslint-disable-next-line
         .catch(error => console.log(error.message));
@@ -81,8 +85,9 @@ export default {
     }
   },
   mounted() {
-    this.getArtsyArtistId();
-    this.fetchSimilarArtists();
+    this.getArtistUrl();
+    // this.getArtsyArtistId();
+    // this.fetchSimilarArtists();
   }
 };
 </script>
