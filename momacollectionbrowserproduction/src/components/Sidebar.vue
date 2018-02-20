@@ -4,7 +4,7 @@
     <h2>MOMA Photography Collection Browser</h2>
 <form>
   <fieldset>
-    <legend>Date Range</legend>
+    <!-- <legend>Date Range</legend>
      <div class="slider-group row">
       <label for="slider1" class="col-sm-2 col-form-label">Year Start (1839)</label>
       <div class="col-sm-10">
@@ -14,7 +14,7 @@
       <div class="col-sm-10">
              <input class="slider" id="slider2" type="range" min="1839" max="2018" step="10" value="2018"/>
       </div>
-      </div>
+      </div> -->
     <fieldset class="form-group">
       <legend>Print Type</legend>
       <div class="form-check">
@@ -185,11 +185,11 @@
         </label>
       </div>
   </fieldset>
-  <div class="form-group">
+  <!-- <div class="form-group">
   <label class="col-form-label" for="inputDefault">Search:</label>
   <input class="form-control" placeholder="Search criteria" id="inputDefault" type="text">
-</div>
-    <button @click.prevent="search" type="submit" class="btn btn-primary">Submit</button>
+</div> -->
+    <!-- <button @click.prevent="search" type="submit" class="btn btn-primary">Submit</button> -->
   </fieldset>
 </form>
 <a href="http://dx.doi.org/10.5281/zenodo.1163802"
