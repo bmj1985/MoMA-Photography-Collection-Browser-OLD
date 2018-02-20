@@ -1,7 +1,7 @@
 /* eslint-disable */
 <template>
 <div class="wrapper">
-  <div class="card border-primary mb-3" style="max-width: 20rem;" v-for="artwork in artworks.slice(0,50)" :key="artwork.ObjectID">
+  <div class="card border-primary mb-3" style="max-width: 20rem;" v-for="artwork in mutatedArtworks.slice(0,99)" :key="artwork.ObjectID">
   <div class="card-header">
     {{artwork.Medium}}
     </div>
@@ -18,7 +18,6 @@
     <p class="togglearrow" @click="infoToggle = !infoToggle">&#9660;</p>
     <div :class="{ hidden : infoToggle }">
     <AttributeList :artwork="artwork"/>
-    <!-- <SimilarArtist :artwork="artwork"></SimilarArtist> -->
     </div>
   </div>
 </div>
@@ -27,22 +26,14 @@
 
 <script>
 import AttributeList from './AttributeList';
-import SimilarArtist from './SimilarArtist';
 
 export default {
   name: 'Card',
-  components: { AttributeList, SimilarArtist },
-  props: ['artworks'],
+  components: { AttributeList },
+  props: ['mutatedArtworks'],
   data() {
     return {
-      xappToken:
-        // eslint-disable-next-line
-        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6IiIsImV4cCI6MTUxOTUxMTUxOCwiaWF0IjoxNTE4OTA2NzE4LCJhdWQiOiI1YTdkZjRlMmIyMDJhMzJmZGM2NWExZGUiLCJpc3MiOiJHcmF2aXR5IiwianRpIjoiNWE4OGFkNWU5YzE4ZGIzN2E5NzQ2ZTg3In0.NNjM3nHvQd5Rm2Gs2zGHwKWPuBnZ8ZsrbijlhZx8c9U',
-      infoToggle: true,
-      artistData: '',
-      artsyUrl: '',
-      artsyArtistId: '',
-      similarArtist: []
+      infoToggle: true
     };
   }
 };

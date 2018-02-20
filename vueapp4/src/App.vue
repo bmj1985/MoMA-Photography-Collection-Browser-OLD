@@ -1,11 +1,11 @@
 /* eslint-disable */
 <template>
 <div id="app">
-  <Sidebar class="sidebar" :artworks="artworks"/>
+  <Sidebar class="sidebar" :mutatedArtworks="mutatedArtworks" :artworks="artworks"/>
   <div>
     <ul class="cardlist">
       <li class="cardlistitem">
-          <Card class="row" :artworks="artworks"/>
+          <Card class="row" :mutatedArtworks="mutatedArtworks"/>
       </li>
     </ul>
     </div>
@@ -28,7 +28,8 @@ export default {
       artistData: '',
       momaAPI_Url: '../static/momaartworks.json',
       token: '',
-      artworks: []
+      artworks: [],
+      mutatedArtworks: []
     };
   },
   mounted() {
@@ -43,9 +44,7 @@ export default {
             return artwork;
           }
         });
-        console.log(artworks);
         this.artworks = artworks.slice(0, 50);
-        console.log(this.artworks);
       })
       .then(getToken());
   },
