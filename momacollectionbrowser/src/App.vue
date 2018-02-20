@@ -29,11 +29,12 @@
   :filterScreenprint="filterScreenprint"
   :filterInkjet="filterInkjet"
   :filterPhotomontage="filterPhotomontage"
-  :mutatedArtworks="mutatedArtworks"/>
+  :mutatedArtworks="mutatedArtworks"
+  :search="search"/>
   <div>
     <ul class="cardlist">
       <li class="cardlistitem">
-          <Card class="row" :mutatedArtworks="mutatedArtworks"/>
+          <Card class="row" :mutatedArtworks="mutatedArtworks" :artworks="artworks"/>
       </li>
     </ul>
     </div>
@@ -71,11 +72,14 @@ export default {
             return artwork;
           }
         });
-        this.artworks = artworks;
+        this.artworks = artworks.sort(function() {
+          return 0.5 - Math.random();
+        });
       });
   },
   methods: {
     filterGelatinSilver() {
+      const randomNumber = Math.floor(Math.random() * 8322);
       let gelatinSilver = this.artworks.filter(artwork => {
         if (artwork.Medium != null) {
           return artwork;
@@ -91,9 +95,13 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringGelatinSilver;
+      console.log('Gelatin Silver', randomNumber);
+      this.mutatedArtworks = stringGelatinSilver.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterPigmentedInkjet() {
+      const randomNumber = Math.floor(Math.random() * 202);
       let pigmentedInkjet = this.artworks.filter(artwork => {
         if (artwork.Medium != null) {
           return artwork;
@@ -106,7 +114,10 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringPigmentedInkjet;
+      console.log('Pigmented Inkjet', stringPigmentedInkjet.length);
+      this.mutatedArtworks = stringPigmentedInkjet.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterChromogenicColor() {
       let chromogenicColor = this.artworks.filter(artwork => {
@@ -121,7 +132,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringChromogenicColor;
+      this.mutatedArtworks = stringChromogenicColor.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterSilverDyeBleach() {
       let silverDyeBleach = this.artworks.filter(artwork => {
@@ -136,7 +149,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringSilverDyeBleach;
+      this.mutatedArtworks = stringSilverDyeBleach.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterColorInstant() {
       let colorInstant = this.artworks.filter(artwork => {
@@ -151,7 +166,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringColorInstant;
+      this.mutatedArtworks = stringColorInstant.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterDyeTransfer() {
       let dyeTransfer = this.artworks.filter(artwork => {
@@ -164,7 +181,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringDyeTransfer;
+      this.mutatedArtworks = stringDyeTransfer.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterAlbumen() {
       let albumen = this.artworks.filter(artwork => {
@@ -190,7 +209,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringAmbrotype;
+      this.mutatedArtworks = stringAmbrotype.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterBromoil() {
       let bromoil = this.artworks.filter(artwork => {
@@ -203,7 +224,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringBromoil;
+      this.mutatedArtworks = stringBromoil.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterCalotype() {
       let calotype = this.artworks.filter(artwork => {
@@ -216,7 +239,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringCalotype;
+      this.mutatedArtworks = stringCalotype.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterCarbonPrint() {
       let carbonPrint = this.artworks.filter(artwork => {
@@ -229,7 +254,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringCarbonPrint;
+      this.mutatedArtworks = stringCarbonPrint.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterCollodion() {
       let collodion = this.artworks.filter(artwork => {
@@ -242,7 +269,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringCollodion;
+      this.mutatedArtworks = stringCollodion.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterCyanotype() {
       let cyanotype = this.artworks.filter(artwork => {
@@ -255,7 +284,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringCyanotype;
+      this.mutatedArtworks = stringCyanotype.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterDaguerreotype() {
       let daguerreotype = this.artworks.filter(artwork => {
@@ -270,7 +301,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringDaguerreotype;
+      this.mutatedArtworks = stringDaguerreotype.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterGumBichromate() {
       let gumBichromate = this.artworks.filter(artwork => {
@@ -285,7 +318,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringGumBichromate;
+      this.mutatedArtworks = stringGumBichromate.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterGumPlatinum() {
       let gumPlatinum = this.artworks.filter(artwork => {
@@ -298,7 +333,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringGumPlatinum;
+      this.mutatedArtworks = stringGumPlatinum.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterPlatinumPalladium() {
       let platinumPalladium = this.artworks.filter(artwork => {
@@ -311,7 +348,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringPlatinumPalladium;
+      this.mutatedArtworks = stringPlatinumPalladium.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterSaltedPaper() {
       let saltedPaper = this.artworks.filter(artwork => {
@@ -324,7 +363,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringSaltedPaper;
+      this.mutatedArtworks = stringSaltedPaper.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterTintype() {
       let tintype = this.artworks.filter(artwork => {
@@ -337,7 +378,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringTintype;
+      this.mutatedArtworks = stringTintype.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterPrintingOutPaper() {
       let printingOutPaper = this.artworks.filter(artwork => {
@@ -353,7 +396,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringPrintingOutPaper;
+      this.mutatedArtworks = stringPrintingOutPaper.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterIntaglio() {
       let intaglio = this.artworks.filter(artwork => {
@@ -366,7 +411,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringIntaglio;
+      this.mutatedArtworks = stringIntaglio.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterLithograph() {
       let lithograph = this.artworks.filter(artwork => {
@@ -379,7 +426,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringLithograph;
+      this.mutatedArtworks = stringLithograph.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterPhotogravure() {
       let photogravure = this.artworks.filter(artwork => {
@@ -392,7 +441,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringPhotogravure;
+      this.mutatedArtworks = stringPhotogravure.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterSerigraph() {
       let serigraph = this.artworks.filter(artwork => {
@@ -405,7 +456,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringSerigraph;
+      this.mutatedArtworks = stringSerigraph.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterScreenprint() {
       let screenprint = this.artworks.filter(artwork => {
@@ -418,7 +471,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringScreenprint;
+      this.mutatedArtworks = stringScreenprint.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterInkjet() {
       let inkjet = this.artworks.filter(artwork => {
@@ -431,7 +486,9 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringInkjet;
+      this.mutatedArtworks = stringInkjet.sort(function() {
+        return 0.5 - Math.random();
+      });
     },
     filterPhotomontage() {
       let photomontage = this.artworks.filter(artwork => {
@@ -445,6 +502,13 @@ export default {
         }
       });
       this.mutatedArtworks = stringPhotomontage;
+    },
+    search(input) {
+      const newArray = [];
+      let searchArray = this.artworks
+        .slice(0, 20)
+        .map((artwork, index) => newArray.push(Object.values(artwork)));
+      console.log(newArray);
     }
   }
 };

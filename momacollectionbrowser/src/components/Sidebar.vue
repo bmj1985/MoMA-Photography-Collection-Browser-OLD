@@ -189,7 +189,7 @@
   <label class="col-form-label" for="inputDefault">Search:</label>
   <input class="form-control" placeholder="Search criteria" id="inputDefault" type="text">
 </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button @click.prevent="search" type="submit" class="btn btn-primary">Submit</button>
   </fieldset>
 </form>
 <a href="http://dx.doi.org/10.5281/zenodo.1163802"
@@ -233,7 +233,8 @@ export default {
     'filterSerigraph',
     'filterScreenprint',
     'filterInkjet',
-    'filterPhotomontage'
+    'filterPhotomontage',
+    'search'
   ]
 };
 </script>
