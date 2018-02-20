@@ -1,7 +1,8 @@
 /* eslint-disable */
 <template>
 <div class="wrapper">
-   <div class="card border-primary mb-3" style="max-width: 20rem;" v-for="artwork in artworks.slice(0,29)" :key="artwork.ObjectID" v-if="mutatedArtworks.length < 1">
+  <div v-if="artworks.length < 1" id="pageloadingdiv"><p id="pageloading">Please wait<br>while the<br>page loads.</p></div>
+   <div v-else-if="mutatedArtworks.length < 1" class="card border-primary mb-3" style="max-width: 20rem;" v-for="artwork in artworks.slice(0,29)" :key="artwork.ObjectID">
   <div class="card-header">
     {{artwork.Medium}}
     </div>
@@ -18,7 +19,7 @@
     <p class="togglearrow" @click="infoToggle = !infoToggle">&#9660;</p>
     <AttributeList :artwork="artwork" :class="{ hidden : infoToggle }"/>
   </div>
-  </div>
+  </div v-else-if>
   <v-else class="card border-primary mb-3" style="max-width: 20rem;" v-for="artwork in mutatedArtworks.slice(0,99)" :key="artwork.ObjectID">
   <div class="card-header">
     {{artwork.Medium}}
@@ -56,6 +57,9 @@ export default {
 </script>
 
 <style scoped>
+.wrapper {
+  align-items: center;
+}
 .card-body {
   display: flex;
   flex-direction: column;
@@ -72,6 +76,13 @@ export default {
 }
 #toolong {
   font-size: 5rem;
+  text-align: center;
+}
+
+#pageloading {
+  font-size: 5rem;
+  align-self: center;
+  margin: 10vh 5vw 10vh 5vw;
   text-align: center;
 }
 </style>
