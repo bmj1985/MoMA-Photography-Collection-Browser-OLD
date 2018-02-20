@@ -94,7 +94,7 @@
       </div>
       <div class="form-check">
         <label class="form-check-label">
-          <input @click="fitlerCyanotype" type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
+          <input @click="filterCyanotype" type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
           Cyanotype
         </label>
       </div>
@@ -205,7 +205,6 @@ alt="DOI" data-canonical-src="https://zenodo.org/badge/doi/10.5281/zenodo.116380
 export default {
   name: 'Sidebar',
   props: [
-    'artworks',
     'mutatedArtworks',
     'filterGelatinSilver',
     'filterPigmentedInkjet',
@@ -219,7 +218,7 @@ export default {
     'filterCalotype',
     'filterCarbonPrint',
     'filterCollodion',
-    'fitlerCyanotype',
+    'filterCyanotype',
     'filterDaguerreotype',
     'filterGumBichromate',
     'filterGumPlatinum',

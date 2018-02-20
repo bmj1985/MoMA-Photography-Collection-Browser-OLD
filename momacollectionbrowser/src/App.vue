@@ -79,12 +79,9 @@ export default {
   },
   methods: {
     filterGelatinSilver() {
-      const randomNumber = Math.floor(Math.random() * 8322);
-      let gelatinSilver = this.artworks.filter(artwork => {
-        if (artwork.Medium != null) {
-          return artwork;
-        }
-      });
+      let gelatinSilver = this.artworks.filter(
+        artwork => artwork.Medium != null
+      );
       let stringGelatinSilver = gelatinSilver.filter(photograph => {
         if (
           photograph.Medium.toLowerCase().includes('gelatin silver') === true &&
@@ -95,7 +92,6 @@ export default {
           return photograph;
         }
       });
-      console.log('Gelatin Silver', randomNumber);
       this.mutatedArtworks = stringGelatinSilver.sort(function() {
         return 0.5 - Math.random();
       });
