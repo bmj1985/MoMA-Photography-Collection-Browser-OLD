@@ -1,4 +1,3 @@
-/* eslint-disable */
 <template>
   <div>
     <div>
@@ -9,6 +8,7 @@
   </div>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -21,8 +21,8 @@ export default {
   data() {
     return {
       xappToken:
-        // eslint-disable-next-line
-        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6IiIsImV4cCI6MTUxOTUxMTUxOCwiaWF0IjoxNTE4OTA2NzE4LCJhdWQiOiI1YTdkZjRlMmIyMDJhMzJmZGM2NWExZGUiLCJpc3MiOiJHcmF2aXR5IiwianRpIjoiNWE4OGFkNWU5YzE4ZGIzN2E5NzQ2ZTg3In0.NNjM3nHvQd5Rm2Gs2zGHwKWPuBnZ8ZsrbijlhZx8c9U',
+        /* es-lint-disable-next-line */
+        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6IiIsImV4cCI6MTUxOTc2Njg5MywiaWF0IjoxNTE5MTYyMDkzLCJhdWQiOiI1YTdkZjRlMmIyMDJhMzJmZGM2NWExZGUiLCJpc3MiOiJHcmF2aXR5IiwianRpIjoiNWE4YzkyZWQ4YjNiODEzNWRiNTk4OTlkIn0.3zJzNKPRlTJCnxKIk_K5_3Pt_zx4msilXGNJVPAt4II',
       artsyUrl: '',
       artsyArtistId: '',
       similarArtists: [],
@@ -32,10 +32,33 @@ export default {
     };
   },
   methods: {
+    getToken() {
+      const clientID = 'e7a553ede809b28975c5';
+      const clientSecret = '3958f90fe1ff54c8380e508aaf2966f9';
+      return (
+        fetch('https://api.artsy.net/api/tokens/xapp_token', {
+          headers: new Headers({
+            'Content-Type': 'application/json'
+          }),
+          method: 'POST',
+          body: JSON.stringify({
+            client_id: clientID,
+            client_secret: clientSecret
+          })
+        })
+          .then(response => response.json())
+          .then(response => {
+            console.log(response);
+            this.xappToken = response.token;
+          })
+          // eslint-disable-next-line
+          .catch(err => console.error('Request failed', err))
+      );
+    },
     getArtistUrl() {
       const artsyUrl = `https://api.artsy.net/api/search?q=${
         this.artwork.Artist[0]
-      }&type=artist`;
+      }`;
       fetch(artsyUrl, {
         method: 'GET',
         headers: new Headers({
@@ -43,9 +66,16 @@ export default {
         })
       })
         .then(response => response.json())
-        .then(response => {
-          this.artistUrl = response._embedded.results[0]._links.self.href;
-          console.log(this.artistUrl);
+        .then((response, secondThing, thirdThing) => {
+          console.log(response, secondThing, thirdThing);
+          console.log(typeof response._embedded);
+          // if (response._embedded != undefined) {
+          //   this.artistUrl = response._embedded.results[0]._links.self.href;
+          // } else {
+          //   this.artistUrl =
+          //     'https://api.artsy.net/api/shows/5401add97261692d5d090000';
+          // }
+          // console.log(this.artistUrl);
         })
         // eslint-disable-next-line
         .catch(error => console.log(error.message));
@@ -81,8 +111,12 @@ export default {
         .then(response => {
           console.log(response);
           this.similarArtists = response._embedded.artists;
+          console.log(this.similarArtists);
         });
     }
+  },
+  beforeMount() {
+    // this.getToken();
   },
   mounted() {
     this.getArtistUrl();

@@ -7,9 +7,7 @@
     {{artwork.Medium}}
     </div>
   <div class="card-body text-primary">
-    <ul>
-  <li>{{artwork.name}}</li>
-  </ul>
+    <p>{{artwork.name}}</p>
     <h4 class="card-title">
       {{artwork.Artist[0]}}
       </h4>
@@ -17,8 +15,10 @@
     <p>{{artwork.Title}}</p>
     <p>{{artwork.Date}}</p>
     <p class="togglearrow" @click="infoToggle = !infoToggle">&#9660;</p>
-    <AttributeList :artwork="artwork" :class="{ hidden : infoToggle }"/>
-    <SimilarArtist :artwork="artwork"></SimilarArtist>
+    <section :class="{ hidden : infoToggle }">
+      <AttributeList :artwork="artwork"/>
+    <!-- <SimilarArtist :artwork="artwork"></SimilarArtist> -->
+    </section>
   </div>
   </div v-else-if>
   <v-else class="card border-primary mb-3" style="max-width: 20rem;" v-for="artwork in mutatedArtworks.slice(0,99)" :key="artwork.ObjectID">
@@ -36,8 +36,10 @@
     <p>{{artwork.Title}}</p>
     <p>{{artwork.Date}}</p>
     <p class="togglearrow" @click="infoToggle = !infoToggle">&#9660;</p>
-    <AttributeList :artwork="artwork" :class="{ hidden : infoToggle }"/>
-    <SimilarArtist :artwork="artwork"></SimilarArtist>
+    <section :class="{ hidden : infoToggle }">
+      <AttributeList :artwork="artwork"/>
+    <!-- <SimilarArtist :artwork="artwork"></SimilarArtist> -->
+    </section>
   </div>
   </v-else>
 </div>
@@ -45,11 +47,11 @@
 
 <script>
 import AttributeList from './AttributeList';
-import SimilarArtist from './SimilarArtist';
+// import SimilarArtist from './SimilarArtist';
 
 export default {
   name: 'Card',
-  components: { AttributeList, SimilarArtist },
+  components: { AttributeList },
   props: ['mutatedArtworks', 'artworks'],
   data() {
     return {
