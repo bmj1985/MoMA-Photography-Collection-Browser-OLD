@@ -34,7 +34,9 @@
   <div id="carddiv">
     <ul class="cardlist">
       <li class="cardlistitem">
-          <Card class="row" :mutatedArtworks="mutatedArtworks" :artworks="artworks"/>
+          <Card class="row" :mutatedArtworks="mutatedArtworks"
+          :artworks="artworks"
+          :departmentHeads="departmentHeads"/>
       </li>
     </ul>
     </div>
@@ -76,9 +78,6 @@ export default {
     }
   },
   methods: {
-    moment: function() {
-      return moment();
-    },
     getDataForArtworks() {
       fetch(this.momaArtworksAPI_Url)
         .then(response => response.json())
@@ -106,37 +105,33 @@ export default {
           });
           this.departmentHeads = departmentHeads;
           this.formatDeptHeadData();
-          this.getSpecificCurator();
         });
     },
     formatDeptHeadData() {
       return this.departmentHeads.map(head => {
-        head.PositionBeginYear =
-          head.PositionBeginYear.toString() + '-' + '01' + '-' + '01';
+        head.PositionBeginYear = new Date(
+          head.PositionBeginYear.toString() + '-' + '01' + '-' + '01'
+        );
         if (head.PositionEndYear === '') {
-          head.PositionEndYear = this.moment();
+          head.PositionEndYear = new Date();
         } else {
-          head.PositionEndYear = head.PositionEndYear + '-' + '12' + '-' + '31';
+          head.PositionEndYear = new Date(
+            head.PositionEndYear + '-' + '12' + '-' + '31'
+          );
         }
         return head;
       });
     },
-    getSpecificCurator(artworkDate) {
-      const photoCurators = this.departmentHeads;
-      return photoCurators.filter(head => {
-        return (
-          this.moment(this.getArtworkDate()).isBefore(head.PositionEndYear) &&
-          this.moment(this.getArtworkDate()).isAfter(head.PositionBeginYear)
-        );
-      });
-      console.log(photoCurators);
-      return photoCurators;
-    },
     getArtworkDate() {
-      let noNullDates = this.artworks
+      return this.artworks
         .filter(artwork => artwork.DateAcquired != null)
         .map(artwork => {
-          this.acquisitionDate = artwork.DateAcquired;
+          this.acquisitionDate.push(
+            Object.create({
+              AcquisitionDate: artwork.DateAcquired,
+              ObjectID: artwork.ObjectID
+            })
+          );
         });
     },
     filterGelatinSilver() {

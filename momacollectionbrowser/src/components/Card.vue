@@ -36,10 +36,10 @@
     <p>{{artwork.Title}}</p>
     <p>{{artwork.Date}}</p>
     <p class="togglearrow" @click="infoToggle = !infoToggle">&#9660;</p>
-    <section :class="{ hidden : infoToggle }">
-      <AttributeList :artwork="artwork"/>
+      <AttributeList :class="{ hidden : infoToggle }" :artwork="artwork"
+      :departmentHeads="departmentHeads"/>
+   
     <!-- <SimilarArtist :artwork="artwork"></SimilarArtist> -->
-    </section>
   </div>
   </div>
 </div>
@@ -47,12 +47,13 @@
 
 <script>
 import AttributeList from './AttributeList';
+import moment from 'moment';
 // import SimilarArtist from './SimilarArtist';
 
 export default {
   name: 'Card',
   components: { AttributeList },
-  props: ['mutatedArtworks', 'artworks'],
+  props: ['mutatedArtworks', 'artworks', 'departmentHeads'],
   data() {
     return {
       infoToggle: true
