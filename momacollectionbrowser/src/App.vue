@@ -45,6 +45,7 @@
 <script>
 import Card from '@/components/Card';
 import Sidebar from '@/components/Sidebar';
+import moment from 'moment';
 
 export default {
   name: 'App',
@@ -69,9 +70,6 @@ export default {
     // this.getDataForDeptHeads();
   },
   methods: {
-    moment: function() {
-      return moment();
-    },
     getDataForArtworks() {
       fetch(this.momaArtworksAPI_Url)
         .then(response => response.json())
@@ -89,38 +87,23 @@ export default {
           });
         });
     },
-    // getDataForDeptHeads() {
-    //   fetch(this.momaDeptHeadsAPI_Url)
-    //     .then(response => response.json())
-    //     .then(response => {
-    //       let departmentHeads = response.filter(department => {
-    //         return (
-    //           department.DepartmentFullName === 'Department of Photography'
-    //         );
-    //       });
-    //       this.departmentHeads = departmentHeads;
-    //     });
-    // },
-    // compareDates(dateAcquired, dateForHead) {
-    //   if (new Date(dateAcquired) < new Date(dateForHead, 0, 1)) {
-    //     return -1;
-    //   } else if (new Date(dateAcquired) > new Date(dateForHead, 0, 1)) {
-    //     return 1;
-    //   } else return 0;
-    // },
-    // addDeptHeadsToArtworks() {
-    //   let noNullDates = this.artworks.filter(
-    //     artwork => artwork.DateAcquired != null
-    //   );
-    //   noNullDates.forEach(artwork => {
-    //     compareDates(
-    //       artwork.DateAcquired,
-    //       this.departmentHeads.forEach(head => {
-    //         head.PositionEndDate;
-    //       })
-    //     );
-    //   });
-    // },
+    getDataForDeptHeads() {
+      fetch(this.momaDeptHeadsAPI_Url)
+        .then(response => response.json())
+        .then(response => {
+          let departmentHeads = response.filter(department => {
+            return (
+              department.DepartmentFullName === 'Department of Photography'
+            );
+          });
+          this.departmentHeads = departmentHeads;
+        });
+    },
+    addDeptHeadsToArtworks() {
+      let noNullDates = this.artworks.filter(
+        artwork => artwork.DateAcquired != null
+      );
+    },
     filterGelatinSilver() {
       let gelatinSilver = this.artworks.filter(
         artwork => artwork.Medium != null
