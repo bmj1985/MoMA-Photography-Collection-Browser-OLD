@@ -30,7 +30,6 @@
   :filterInkjet="filterInkjet"
   :filterPhotomontage="filterPhotomontage"
   :mutatedArtworks="mutatedArtworks"
-  :addDeptHeadsToArtworks="addDeptHeadsToArtworks"
   :search="search"/>
   <div id="carddiv">
     <ul class="cardlist">
@@ -62,16 +61,23 @@ export default {
       momaArtworks: [],
       departmentHeads: [],
       artworks: [],
-      mutatedArtworks: []
+      mutatedArtworks: [],
+      acquisitionDate: []
     };
   },
   mounted() {
     this.getDataForArtworks();
-    this.getDataForDeptHeads();
+  },
+  computed: {
+    randomSortArtworks() {
+      this.artworks.sort(function() {
+        return 0.5 - Math.random();
+      });
+    }
   },
   methods: {
     moment: function() {
-      return moment().format();
+      return moment();
     },
     getDataForArtworks() {
       fetch(this.momaArtworksAPI_Url)
@@ -85,9 +91,8 @@ export default {
               return artwork;
             }
           });
-          this.artworks = artworks.sort(function() {
-            return 0.5 - Math.random();
-          });
+          this.artworks = artworks;
+          this.getDataForDeptHeads();
         });
     },
     getDataForDeptHeads() {
@@ -100,8 +105,8 @@ export default {
             );
           });
           this.departmentHeads = departmentHeads;
-          console.log(this.departmentHeads);
           this.formatDeptHeadData();
+          this.getSpecificCurator();
         });
     },
     formatDeptHeadData() {
@@ -113,11 +118,6 @@ export default {
         } else {
           head.PositionEndYear = head.PositionEndYear + '-' + '12' + '-' + '31';
         }
-        console.log(
-          head.PositionBeginYear,
-          head.PositionEndYear,
-          head.DisplayName
-        );
         return head;
       });
     },
@@ -125,16 +125,19 @@ export default {
       const photoCurators = this.departmentHeads;
       return photoCurators.filter(head => {
         return (
-          this.moment(artworkDate).isBefore(head.PositionEndYear) &&
-          this.moment(artworkDate).isAfter(head.PositionBeginYear)
+          this.moment(this.getArtworkDate()).isBefore(head.PositionEndYear) &&
+          this.moment(this.getArtworkDate()).isAfter(head.PositionBeginYear)
         );
       });
+      console.log(photoCurators);
       return photoCurators;
     },
-    addDeptHeadsToArtworks() {
-      let noNullDates = this.artworks.filter(
-        artwork => artwork.DateAcquired != null
-      );
+    getArtworkDate() {
+      let noNullDates = this.artworks
+        .filter(artwork => artwork.DateAcquired != null)
+        .map(artwork => {
+          this.acquisitionDate = artwork.DateAcquired;
+        });
     },
     filterGelatinSilver() {
       let gelatinSilver = this.artworks.filter(
