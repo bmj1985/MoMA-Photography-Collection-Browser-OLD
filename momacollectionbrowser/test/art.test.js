@@ -11,7 +11,7 @@ function filterArtworks() {
       return artwork;
     }
   });
-  console.log(photograph);
+  // console.log(photograph);
 }
 
 function formatDeptHeadData() {
@@ -26,17 +26,20 @@ function formatDeptHeadData() {
         head.PositionEndYear + '-' + '12' + '-' + '31'
       );
     }
-    console.log(head.PositionBeginYear, head.PositionEndYear);
     return head;
   });
 }
 
 function filterDepartmentHeads() {
+  let newDepartmentHeads = [];
   return departmentHeads.filter(department => {
     return department.DepartmentFullName === 'Department of Photography';
   });
+  console.log(departmentHeads);
+  departmentHeads = newDepartmentHeads;
+  console.log(newDepartmentHeads);
 }
-
+console.log(newDepartmentHeads);
 function getHeadCurators(artworkDate) {
   const photoCurators = filterDepartmentHeads();
   return photoCurators.filter(head => {
@@ -49,25 +52,22 @@ function getHeadCurators(artworkDate) {
 }
 
 function getSpecificCurator() {
-  const artworkDate = '';
+  let artworkDate = '';
   const photograph = artworks.filter((artwork, index) => {
     if (artwork.Department === 'Photography' && artwork.ThumbnailURL != null) {
       return artwork;
     }
   });
   photograph.forEach(photo => {
-    let artworkDate = photograph.DateAcquired;
-    return artworkDate;
+    let artworkDate = photo.DateAcquired;
+    new Date(artworkDate);
+    return departmentHeads.filter(head => {
+      moment(artworkDate).isBefore(head.PositionEndYear) &&
+        moment(artworkDate).isAfter(head.PositionBeginYear);
+    });
   });
-  console.log(artworkDate);
-  let artworkDate = photograph.DateAcquired;
-  new Date(artworkDate);
-  console.log(artworkDate);
-  return departmentHeads.filter(head => {
-    moment(artworkDate).isBefore(head.PositionEndYear) &&
-      moment(artworkDate).isAfter(head.PositionBeginYear);
-  });
-  console.log(departmentHeads);
+  // console.log(departmentHeads.slice(0, 10));
 }
 
+filterDepartmentHeads();
 getSpecificCurator();

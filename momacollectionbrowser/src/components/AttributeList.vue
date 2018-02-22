@@ -6,7 +6,7 @@
     <p>Acquisition Date: {{artwork.DateAcquired}}</p>
     <p>Artist Bio: {{artwork.ArtistBio[0]}}</p>
     <p>Gender: {{artwork.Gender[0]}}</p>
-    <p>Department Head(s) at time of acquisition: {{getSpecificCurator(artwork.DateAcquired)}}
+    <p>Department Head(s) at time of acquisition: 
       </p>
     <p><a :href="artwork.URL" target="_blank">Link to Moma Official Page</a></p>
     </li>
