@@ -2,6 +2,7 @@
 <template>
   <div>
     <h2>MOMA Photography Collection Browser</h2>
+      <button id="randombutton" type="button" class="btn btn-primary btn-sm">   Display Random Selection   </button>
 <form>
   <fieldset>
     <!-- <legend>Date Range</legend>
@@ -15,7 +16,6 @@
              <input class="slider" id="slider2" type="range" min="1839" max="2018" step="10" value="2018"/>
       </div>
       </div> -->
-    <fieldset class="form-group">
       <legend>Print Type</legend>
       <div class="form-check">
         <h6>Gelatin Silver</h6>
@@ -239,6 +239,9 @@ export default {
 </script>
 
 <style scoped>
+#randombutton {
+  margin: 10px 0 10px 0;
+}
 .slider {
   margin: 1vw;
 }

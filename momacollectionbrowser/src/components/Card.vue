@@ -21,7 +21,7 @@
     </section>
   </div>
   </div v-else-if>
-  <v-else class="card border-primary mb-3" style="max-width: 20rem;" v-for="artwork in mutatedArtworks.slice(0,99)" :key="artwork.ObjectID">
+  <div v-else class="card border-primary mb-3" style="max-width: 20rem;" v-for="artwork in mutatedArtworks.slice(0,99)" :key="artwork.ObjectID">
   <div class="card-header">
     {{artwork.Medium}}
     </div>
@@ -41,7 +41,7 @@
     <!-- <SimilarArtist :artwork="artwork"></SimilarArtist> -->
     </section>
   </div>
-  </v-else>
+  </div>
 </div>
 </template>
 

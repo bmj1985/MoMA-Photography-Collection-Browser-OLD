@@ -30,6 +30,7 @@
   :filterInkjet="filterInkjet"
   :filterPhotomontage="filterPhotomontage"
   :mutatedArtworks="mutatedArtworks"
+  :addDeptHeadsToArtworks="addDeptHeadsToArtworks"
   :search="search"/>
   <div id="carddiv">
     <ul class="cardlist">
@@ -54,30 +55,72 @@ export default {
   data() {
     return {
       artistData: '',
-      momaAPI_Url: '../static/momaartworks.json',
+      momaArtworksAPI_Url: '../static/momaartworks.json',
+      momaDeptHeadsAPI_Url: '../static/momadepartmentheads.json',
       token: '',
+      momaArtworks: [],
+      momaDeptHeads: [],
       artworks: [],
       mutatedArtworks: []
     };
   },
   mounted() {
-    fetch(this.momaAPI_Url)
-      .then(response => response.json())
-      .then(response => {
-        const artworks = response.filter(artwork => {
-          if (
-            artwork.Department === 'Photography' &&
-            artwork.ThumbnailURL != null
-          ) {
-            return artwork;
-          }
-        });
-        this.artworks = artworks.sort(function() {
-          return 0.5 - Math.random();
-        });
-      });
+    this.getDataForArtworks();
+    // this.getDataForDeptHeads();
   },
   methods: {
+    moment: function() {
+      return moment();
+    },
+    getDataForArtworks() {
+      fetch(this.momaArtworksAPI_Url)
+        .then(response => response.json())
+        .then(response => {
+          const artworks = response.filter((artwork, index) => {
+            if (
+              artwork.Department === 'Photography' &&
+              artwork.ThumbnailURL != null
+            ) {
+              return artwork;
+            }
+          });
+          this.artworks = artworks.sort(function() {
+            return 0.5 - Math.random();
+          });
+        });
+    },
+    // getDataForDeptHeads() {
+    //   fetch(this.momaDeptHeadsAPI_Url)
+    //     .then(response => response.json())
+    //     .then(response => {
+    //       let departmentHeads = response.filter(department => {
+    //         return (
+    //           department.DepartmentFullName === 'Department of Photography'
+    //         );
+    //       });
+    //       this.departmentHeads = departmentHeads;
+    //     });
+    // },
+    // compareDates(dateAcquired, dateForHead) {
+    //   if (new Date(dateAcquired) < new Date(dateForHead, 0, 1)) {
+    //     return -1;
+    //   } else if (new Date(dateAcquired) > new Date(dateForHead, 0, 1)) {
+    //     return 1;
+    //   } else return 0;
+    // },
+    // addDeptHeadsToArtworks() {
+    //   let noNullDates = this.artworks.filter(
+    //     artwork => artwork.DateAcquired != null
+    //   );
+    //   noNullDates.forEach(artwork => {
+    //     compareDates(
+    //       artwork.DateAcquired,
+    //       this.departmentHeads.forEach(head => {
+    //         head.PositionEndDate;
+    //       })
+    //     );
+    //   });
+    // },
     filterGelatinSilver() {
       let gelatinSilver = this.artworks.filter(
         artwork => artwork.Medium != null
@@ -110,7 +153,6 @@ export default {
           return photograph;
         }
       });
-      console.log('Pigmented Inkjet', stringPigmentedInkjet.length);
       this.mutatedArtworks = stringPigmentedInkjet.sort(function() {
         return 0.5 - Math.random();
       });
@@ -504,7 +546,6 @@ export default {
       let searchArray = this.artworks
         .slice(0, 20)
         .map((artwork, index) => newArray.push(Object.values(artwork)));
-      console.log(newArray);
     }
   }
 };
