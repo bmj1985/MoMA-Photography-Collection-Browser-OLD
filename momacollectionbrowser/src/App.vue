@@ -60,16 +60,19 @@ export default {
       momaDeptHeadsAPI_Url: '../static/momadepartmentheads.json',
       token: '',
       momaArtworks: [],
-      momaDeptHeads: [],
+      departmentHeads: [],
       artworks: [],
       mutatedArtworks: []
     };
   },
   mounted() {
     this.getDataForArtworks();
-    // this.getDataForDeptHeads();
+    this.getDataForDeptHeads();
   },
   methods: {
+    moment: function() {
+      return moment().format();
+    },
     getDataForArtworks() {
       fetch(this.momaArtworksAPI_Url)
         .then(response => response.json())
@@ -97,7 +100,36 @@ export default {
             );
           });
           this.departmentHeads = departmentHeads;
+          console.log(this.departmentHeads);
+          this.formatDeptHeadData();
         });
+    },
+    formatDeptHeadData() {
+      return this.departmentHeads.map(head => {
+        head.PositionBeginYear =
+          head.PositionBeginYear.toString() + '-' + '01' + '-' + '01';
+        if (head.PositionEndYear === '') {
+          head.PositionEndYear = this.moment();
+        } else {
+          head.PositionEndYear = head.PositionEndYear + '-' + '12' + '-' + '31';
+        }
+        console.log(
+          head.PositionBeginYear,
+          head.PositionEndYear,
+          head.DisplayName
+        );
+        return head;
+      });
+    },
+    getSpecificCurator(artworkDate) {
+      const photoCurators = this.departmentHeads;
+      return photoCurators.filter(head => {
+        return (
+          this.moment(artworkDate).isBefore(head.PositionEndYear) &&
+          this.moment(artworkDate).isAfter(head.PositionBeginYear)
+        );
+      });
+      return photoCurators;
     },
     addDeptHeadsToArtworks() {
       let noNullDates = this.artworks.filter(
