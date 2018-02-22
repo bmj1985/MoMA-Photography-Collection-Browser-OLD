@@ -1,7 +1,7 @@
 /*eslint-disable */
 // const test = require('ava');
 const artworks = require('../static/momaartworks.json');
-const departmentHeads = require('../static/momadepartmentheads.json');
+let departmentHeads = require('../static/momadepartmentheads.json');
 const moment = require('moment');
 moment().format();
 
@@ -31,24 +31,16 @@ function formatDeptHeadData() {
 }
 
 function filterDepartmentHeads() {
-  let newDepartmentHeads = [];
-  return departmentHeads.filter(department => {
-    return department.DepartmentFullName === 'Department of Photography';
-  });
-  console.log(departmentHeads);
-  departmentHeads = newDepartmentHeads;
-  console.log(newDepartmentHeads);
-}
-console.log(newDepartmentHeads);
-function getHeadCurators(artworkDate) {
-  const photoCurators = filterDepartmentHeads();
-  return photoCurators.filter(head => {
-    return (
-      moment(artworkDate).isBefore(head.PositionEndYear) &&
-      moment(artworkDate).isAfter(head.PositionBeginYear)
-    );
-  });
-  return photoCurators;
+  return departmentHeads
+    .filter(head => {
+      return head.DepartmentFullName === 'Department of Photography';
+    })
+    .filter(head => {
+      return (
+        moment(artworkDate).isBefore(head.PositionEndYear) &&
+        moment(artworkDate).isAfter(head.PositionBeginYear)
+      );
+    });
 }
 
 function getSpecificCurator() {
