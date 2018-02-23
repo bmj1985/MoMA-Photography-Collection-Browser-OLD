@@ -2,14 +2,14 @@
 <div>
   <ul>
     <li>
-    <p>{{artwork.Dimensions}}</p>
-    <p>{{artwork.CreditLine}}</p>
-    <p>Acquisition Date: {{date}}</p>
-    <p>Artist Bio: {{artwork.ArtistBio[0]}}</p>
-    <p>Gender: {{artwork.Gender[0]}}</p>
-    <p>Department Head(s) at time of acquisition: {{curator}}
+    <p>{{mutatedArtwork.Dimensions}}</p>
+    <p>{{mutatedArtwork.CreditLine}}</p>
+    <p>Acquisition Date: {{mutatedArtwork.DateAcquired}}</p>
+    <p>Artist Bio: {{mutatedArtwork.ArtistBio[0]}}</p>
+    <p>Gender: {{mutatedArtwork.Gender[0]}}</p>
+    <p>Department Head(s) at time of acquisition: {{mutatedCurator}}
       </p>
-    <p><a :href="artwork.URL" target="_blank">Link to Moma Official Page</a></p>
+    <p><a :href="mutatedArtwork.URL" target="_blank">Link to Moma Official Page</a></p>
     </li>
   </ul>
 </div>
@@ -18,15 +18,15 @@
 <script>
 import moment from 'moment';
 export default {
-  name: 'AttributeList',
+  name: 'mutatedAttributeList',
   data() {
     return {
-      date: this.artwork.DateAcquired,
-      curator: ''
+      date: this.mutatedArtwork.DateAcquired,
+      mutatedCurator: ''
     };
   },
   props: {
-    artwork: {
+    mutatedArtwork: {
       type: Object
     },
     departmentHeads: {
@@ -48,7 +48,7 @@ export default {
           }
         })
         .forEach(head => {
-          this.curator = head.DisplayName;
+          this.mutatedCurator = head.DisplayName;
         });
     }
   }

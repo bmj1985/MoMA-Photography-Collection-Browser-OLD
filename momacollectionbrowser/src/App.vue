@@ -2,57 +2,71 @@
 <template>
 <div id="app">
   <Sidebar class="sidebar"
-  :filterGelatinSilver="filterGelatinSilver"
-  :filterPigmentedInkjet="filterPigmentedInkjet"
-  :filterChromogenicColor="filterChromogenicColor"
-  :filterSilverDyeBleach="filterSilverDyeBleach"
-  :filterColorInstant="filterColorInstant"
-  :filterDyeTransfer="filterDyeTransfer"
-  :filterAlbumen="filterAlbumen"
-  :filterAmbrotype="filterAmbrotype"
-  :filterBromoil="filterBromoil"
-  :filterCalotype="filterCalotype"
-  :filterCarbonPrint="filterCarbonPrint"
-  :filterCollodion="filterCollodion"
-  :filterCyanotype="filterCyanotype"
-  :filterDaguerreotype="filterDaguerreotype"
-  :filterGumBichromate="filterGumBichromate"
-  :filterGumPlatinum="filterGumPlatinum"
-  :filterPlatinumPalladium="filterPlatinumPalladium"
-  :filterSaltedPaper="filterSaltedPaper"
-  :filterTintype="filterTintype"
-  :filterPrintingOutPaper="filterPrintingOutPaper"
-  :filterIntaglio="filterIntaglio"
-  :filterLithograph="filterLithograph"
-  :filterPhotogravure="filterPhotogravure"
-  :filterSerigraph="filterSerigraph"
-  :filterScreenprint="filterScreenprint"
-  :filterInkjet="filterInkjet"
-  :filterPhotomontage="filterPhotomontage"
-  :mutatedArtworks="mutatedArtworks"
+      :filterGelatinSilver="filterGelatinSilver"
+      :filterPigmentedInkjet="filterPigmentedInkjet"
+      :filterChromogenicColor="filterChromogenicColor"
+      :filterSilverDyeBleach="filterSilverDyeBleach"
+      :filterColorInstant="filterColorInstant"
+      :filterDyeTransfer="filterDyeTransfer"
+      :filterAlbumen="filterAlbumen"
+      :filterAmbrotype="filterAmbrotype"
+      :filterBromoil="filterBromoil"
+      :filterCalotype="filterCalotype"
+      :filterCarbonPrint="filterCarbonPrint"
+      :filterCollodion="filterCollodion"
+      :filterCyanotype="filterCyanotype"
+      :filterDaguerreotype="filterDaguerreotype"
+      :filterGumBichromate="filterGumBichromate"
+      :filterGumPlatinum="filterGumPlatinum"
+      :filterPlatinumPalladium="filterPlatinumPalladium"
+      :filterSaltedPaper="filterSaltedPaper"
+      :filterTintype="filterTintype"
+      :filterPrintingOutPaper="filterPrintingOutPaper"
+      :filterIntaglio="filterIntaglio"
+      :filterLithograph="filterLithograph"
+      :filterPhotogravure="filterPhotogravure"
+      :filterSerigraph="filterSerigraph"
+      :filterScreenprint="filterScreenprint"
+      :filterInkjet="filterInkjet"
+      :filterPhotomontage="filterPhotomontage"
+      :mutatedArtworks="mutatedArtworks"
   :search="search"/>
-  <div id="carddiv">
+  <div v-if="artworks.length < 1" id="pageloadingdiv">
+    <p id="pageloading">Please wait<br>while the<br>page loads.</p>
+  </div>
+  <div v-else-if="mutatedArtworks.length < 1" id="carddiv">
     <ul class="cardlist">
       <li class="cardlistitem">
-          <Card class="row" :mutatedArtworks="mutatedArtworks"
+          <Card class="row"
           :artworks="artworks"
           :departmentHeads="departmentHeads"/>
       </li>
     </ul>
-    </div>
+  </div>
+  <div v-else id="mutatedcarddiv">
+    <ul class="cardlist">
+      <li class="cardlistitem">
+        <mutatedArtworkCard class="row"
+        :mutatedArtworks="mutatedArtworks"
+        :departmentHeads="departmentHeads"/>
+      </li>
+      </ul>
+  </div v-else>
 </div>
 </template>
 
 <script>
 import Card from '@/components/Card';
+import mutatedArtworkCard from '@/components/mutatedArtworkCard';
 import Sidebar from '@/components/Sidebar';
 import moment from 'moment';
 
 export default {
   name: 'App',
   components: {
+    Sidebar,
     Card,
-    Sidebar
+    mutatedArtworkCard
   },
   data() {
     return {
@@ -580,5 +594,11 @@ export default {
 
 li {
   list-style-type: none;
+}
+#pageloading {
+  font-size: 5rem;
+  align-self: center;
+  margin: 10vh 5vw 10vh 5vw;
+  text-align: center;
 }
 </style>

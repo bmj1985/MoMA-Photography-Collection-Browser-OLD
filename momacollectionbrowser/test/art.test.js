@@ -12,7 +12,6 @@ function filterArtworks() {
       return artwork;
     }
   });
-  // console.log(photograph);
 }
 
 function formatDeptHeadData() {
@@ -49,8 +48,7 @@ function getSpecificCurator() {
   photograph.forEach(photo => {
     let artworkDate = photo.DateAcquired;
     new Date(artworkDate);
-    console.log(photoHead);
-    return photoHead.filter(head => {
+    return photoHead.slice(0, 10).filter(head => {
       moment(artworkDate).isBefore(head.PositionEndYear) &&
         moment(artworkDate).isAfter(head.PositionBeginYear);
     });
