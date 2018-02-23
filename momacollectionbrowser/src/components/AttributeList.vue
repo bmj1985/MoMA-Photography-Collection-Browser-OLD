@@ -16,40 +16,17 @@
 </template>
 
 <script>
-import moment from 'moment';
 export default {
   name: 'AttributeList',
-  data() {
-    return {
-      date: this.artwork.DateAcquired,
-      curator: ''
-    };
-  },
   props: {
     artwork: {
       type: Object
     },
-    departmentHeads: {
-      type: Array
-    }
-  },
-  mounted() {
-    this.getSpecificCurator();
-  },
-  methods: {
-    getSpecificCurator() {
-      return this.departmentHeads
-        .filter(head => {
-          if (
-            moment(new Date(this.date)).isBefore(head.PositionEndYear) &&
-            moment(new Date(this.date)).isAfter(head.PositionBeginYear)
-          ) {
-            return head;
-          }
-        })
-        .forEach(head => {
-          this.curator = head.DisplayName;
-        });
+    date: {
+      type: String
+    },
+    curator: {
+      type: String
     }
   }
 };

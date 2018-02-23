@@ -37,7 +37,7 @@
   <div v-else-if="mutatedArtworks.length < 1" id="carddiv">
     <ul class="cardlist">
       <li class="cardlistitem">
-          <Card class="row"
+          <CardCopy class="row"
           :artworks="artworks"
           :departmentHeads="departmentHeads"/>
       </li>
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import Card from '@/components/Card';
+import CardCopy from '@/components/CardCopy';
 import mutatedArtworkCard from '@/components/mutatedArtworkCard';
 import Sidebar from '@/components/Sidebar';
 import moment from 'moment';
@@ -65,7 +65,7 @@ export default {
   name: 'App',
   components: {
     Sidebar,
-    Card,
+    CardCopy,
     mutatedArtworkCard
   },
   data() {
