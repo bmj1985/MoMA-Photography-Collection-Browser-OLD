@@ -1,30 +1,30 @@
-/* eslint-disable */
 <template>
 <div class="wrapper">
-   <div class="card border-primary mb-3" style="max-width: 20rem;" v-for="artwork in artworks.slice(0,29)" :key="artwork.ObjectID">
+ <div class="card border-primary mb-3" style="max-width: 20rem;" v-for="artwork in artworks.slice(0,99)" :key="artwork.ObjectID" :departmentHeads="departmentHeads">
   <div class="card-header">
     {{artwork.Medium}}
     </div>
   <div class="card-body text-primary">
-    <p>{{artwork.name}}</p>
+    <ul>
+  <li>{{artwork.name}}</li>
+  </ul>
     <h4 class="card-title">
       {{artwork.Artist[0]}}
       </h4>
     <img class="image" :src="artwork.ThumbnailURL" alt="">
     <p>{{artwork.Title}}</p>
     <p>{{artwork.Date}}</p>
-    <p class="togglearrow" @click="infoToggle = !infoToggle">&#9660; more info &#9660;</p>
-    <section :class="{ hidden : infoToggle }">
-      <AttributeList :artwork="artwork" :curator="curator"
-      :date="date"/>
-    </section>
+    <p class="togglearrow" @click="infoToggle = !infoToggle">&#9660;more info&#9660;</p>
+      <AttributeList :class="{ hidden : infoToggle }" :artwork="artwork"
+      :departmentHeads="departmentHeads"/>
   </div>
   </div>
-  </div>
+</div>
+</div>
 </template>
+
 <script>
 import AttributeList from './AttributeList';
-import moment from 'moment';
 
 export default {
   name: 'Card',
@@ -32,27 +32,8 @@ export default {
   props: ['artworks', 'departmentHeads'],
   data() {
     return {
-      infoToggle: true,
-      curator: '',
-      date: this.artwork.DateAcquired
+      infoToggle: true
     };
-  },
-  watch: {
-    departmentHeads: function getSpecificCurator() {
-      console.log(this.departmentHeads);
-      return this.departmentHeads
-        .filter(head => {
-          if (
-            moment(new Date(this.date)).isBefore(head.PositionEndYear) &&
-            moment(new Date(this.date)).isAfter(head.PositionBeginYear)
-          ) {
-            return head;
-          }
-        })
-        .forEach(head => {
-          this.curator = head.DisplayName;
-        });
-    }
   }
 };
 </script>

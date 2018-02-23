@@ -2,7 +2,6 @@
 <template>
   <div>
     <h2>MOMA Photography Collection Browser</h2>
-      <button id="randombutton" type="button" class="btn btn-primary btn-sm">   Display Random Selection   </button>
 <form>
   <fieldset>
     <!-- <legend>Date Range</legend>

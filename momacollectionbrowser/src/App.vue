@@ -30,14 +30,14 @@
       :filterInkjet="filterInkjet"
       :filterPhotomontage="filterPhotomontage"
       :mutatedArtworks="mutatedArtworks"
-  :search="search"/>
+  />
   <div v-if="artworks.length < 1" id="pageloadingdiv">
     <p id="pageloading">Please wait<br>while the<br>page loads.</p>
   </div>
   <div v-else-if="mutatedArtworks.length < 1" id="carddiv">
     <ul class="cardlist">
       <li class="cardlistitem">
-          <CardCopy class="row"
+          <Card class="row"
           :artworks="artworks"
           :departmentHeads="departmentHeads"/>
       </li>
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import CardCopy from '@/components/CardCopy';
+import Card from '@/components/Card';
 import mutatedArtworkCard from '@/components/mutatedArtworkCard';
 import Sidebar from '@/components/Sidebar';
 import moment from 'moment';
@@ -65,7 +65,7 @@ export default {
   name: 'App',
   components: {
     Sidebar,
-    CardCopy,
+    Card,
     mutatedArtworkCard
   },
   data() {
@@ -84,13 +84,6 @@ export default {
   mounted() {
     this.getDataForArtworks();
   },
-  computed: {
-    randomSortArtworks() {
-      this.artworks.sort(function() {
-        return 0.5 - Math.random();
-      });
-    }
-  },
   methods: {
     getDataForArtworks() {
       fetch(this.momaArtworksAPI_Url)
@@ -104,7 +97,9 @@ export default {
               return artwork;
             }
           });
-          this.artworks = artworks;
+          this.artworks = artworks.sort(() => {
+            return 0.5 - Math.random();
+          });
           this.getDataForDeptHeads();
         });
     },
@@ -162,7 +157,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringGelatinSilver.sort(function() {
+      this.mutatedArtworks = stringGelatinSilver.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -180,7 +175,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringPigmentedInkjet.sort(function() {
+      this.mutatedArtworks = stringPigmentedInkjet.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -197,7 +192,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringChromogenicColor.sort(function() {
+      this.mutatedArtworks = stringChromogenicColor.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -214,7 +209,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringSilverDyeBleach.sort(function() {
+      this.mutatedArtworks = stringSilverDyeBleach.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -231,7 +226,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringColorInstant.sort(function() {
+      this.mutatedArtworks = stringColorInstant.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -246,7 +241,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringDyeTransfer.sort(function() {
+      this.mutatedArtworks = stringDyeTransfer.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -274,7 +269,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringAmbrotype.sort(function() {
+      this.mutatedArtworks = stringAmbrotype.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -289,7 +284,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringBromoil.sort(function() {
+      this.mutatedArtworks = stringBromoil.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -304,7 +299,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringCalotype.sort(function() {
+      this.mutatedArtworks = stringCalotype.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -319,7 +314,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringCarbonPrint.sort(function() {
+      this.mutatedArtworks = stringCarbonPrint.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -334,7 +329,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringCollodion.sort(function() {
+      this.mutatedArtworks = stringCollodion.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -349,7 +344,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringCyanotype.sort(function() {
+      this.mutatedArtworks = stringCyanotype.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -366,7 +361,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringDaguerreotype.sort(function() {
+      this.mutatedArtworks = stringDaguerreotype.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -383,7 +378,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringGumBichromate.sort(function() {
+      this.mutatedArtworks = stringGumBichromate.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -398,7 +393,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringGumPlatinum.sort(function() {
+      this.mutatedArtworks = stringGumPlatinum.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -413,7 +408,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringPlatinumPalladium.sort(function() {
+      this.mutatedArtworks = stringPlatinumPalladium.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -428,7 +423,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringSaltedPaper.sort(function() {
+      this.mutatedArtworks = stringSaltedPaper.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -443,7 +438,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringTintype.sort(function() {
+      this.mutatedArtworks = stringTintype.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -461,7 +456,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringPrintingOutPaper.sort(function() {
+      this.mutatedArtworks = stringPrintingOutPaper.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -476,7 +471,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringIntaglio.sort(function() {
+      this.mutatedArtworks = stringIntaglio.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -491,7 +486,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringLithograph.sort(function() {
+      this.mutatedArtworks = stringLithograph.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -506,7 +501,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringPhotogravure.sort(function() {
+      this.mutatedArtworks = stringPhotogravure.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -521,7 +516,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringSerigraph.sort(function() {
+      this.mutatedArtworks = stringSerigraph.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -536,7 +531,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringScreenprint.sort(function() {
+      this.mutatedArtworks = stringScreenprint.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -551,7 +546,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringInkjet.sort(function() {
+      this.mutatedArtworks = stringInkjet.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -567,12 +562,6 @@ export default {
         }
       });
       this.mutatedArtworks = stringPhotomontage;
-    },
-    search(input) {
-      const newArray = [];
-      let searchArray = this.artworks
-        .slice(0, 20)
-        .map((artwork, index) => newArray.push(Object.values(artwork)));
     }
   }
 };
