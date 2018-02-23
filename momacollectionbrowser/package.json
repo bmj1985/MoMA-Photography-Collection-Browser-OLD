@@ -5,11 +5,15 @@
   "author": "Brandon Johnson <bmj1985@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev":
+      "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "test": "ava"
   },
   "dependencies": {
+    "ajv": "^6.1.1",
+    "moment": "^2.20.1",
     "vue": "^2.5.2"
   },
   "devDependencies": {
@@ -53,9 +57,5 @@
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"]
 }

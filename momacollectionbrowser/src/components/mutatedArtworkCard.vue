@@ -1,21 +1,21 @@
 <template>
 <div class="wrapper">
- <div class="card border-primary mb-3" style="max-width: 20rem;" v-for="artwork in artworks.slice(0,99)" :key="artwork.ObjectID" :departmentHeads="departmentHeads">
+ <div class="card border-primary mb-3" style="max-width: 20rem;" v-for="mutatedArtwork in mutatedArtworks.slice(0,99)" :key="mutatedArtwork.ObjectID" :departmentHeads="departmentHeads">
   <div class="card-header">
-    {{artwork.Medium}}
+    {{mutatedArtwork.Medium}}
     </div>
   <div class="card-body text-primary">
     <ul>
-  <li>{{artwork.name}}</li>
+  <li>{{mutatedArtwork.name}}</li>
   </ul>
     <h4 class="card-title">
-      {{artwork.Artist[0]}}
+      {{mutatedArtwork.Artist[0]}}
       </h4>
-    <img class="image" :src="artwork.ThumbnailURL" alt="">
-    <p>{{artwork.Title}}</p>
-    <p>{{artwork.Date}}</p>
+    <img class="image" :src="mutatedArtwork.ThumbnailURL" alt="">
+    <p>{{mutatedArtwork.Title}}</p>
+    <p>{{mutatedArtwork.Date}}</p>
     <p class="togglearrow" @click="infoToggle = !infoToggle">&#9660;more info&#9660;</p>
-      <AttributeList :class="{ hidden : infoToggle }" :artwork="artwork"
+      <mutatedAttributeList :class="{ hidden : infoToggle }" :mutatedArtwork="mutatedArtwork"
       :departmentHeads="departmentHeads"/>
   </div>
   </div>
@@ -24,12 +24,13 @@
 </template>
 
 <script>
-import AttributeList from './AttributeList';
+import mutatedAttributeList from './mutatedAttributeList';
+import moment from 'moment';
 
 export default {
-  name: 'Card',
-  components: { AttributeList },
-  props: ['artworks', 'departmentHeads'],
+  name: 'mutatedArtworkCard',
+  components: { mutatedAttributeList },
+  props: ['mutatedArtworks', 'departmentHeads'],
   data() {
     return {
       infoToggle: true

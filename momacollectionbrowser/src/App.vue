@@ -2,82 +2,147 @@
 <template>
 <div id="app">
   <Sidebar class="sidebar"
-  :filterGelatinSilver="filterGelatinSilver"
-  :filterPigmentedInkjet="filterPigmentedInkjet"
-  :filterChromogenicColor="filterChromogenicColor"
-  :filterSilverDyeBleach="filterSilverDyeBleach"
-  :filterColorInstant="filterColorInstant"
-  :filterDyeTransfer="filterDyeTransfer"
-  :filterAlbumen="filterAlbumen"
-  :filterAmbrotype="filterAmbrotype"
-  :filterBromoil="filterBromoil"
-  :filterCalotype="filterCalotype"
-  :filterCarbonPrint="filterCarbonPrint"
-  :filterCollodion="filterCollodion"
-  :filterCyanotype="filterCyanotype"
-  :filterDaguerreotype="filterDaguerreotype"
-  :filterGumBichromate="filterGumBichromate"
-  :filterGumPlatinum="filterGumPlatinum"
-  :filterPlatinumPalladium="filterPlatinumPalladium"
-  :filterSaltedPaper="filterSaltedPaper"
-  :filterTintype="filterTintype"
-  :filterPrintingOutPaper="filterPrintingOutPaper"
-  :filterIntaglio="filterIntaglio"
-  :filterLithograph="filterLithograph"
-  :filterPhotogravure="filterPhotogravure"
-  :filterSerigraph="filterSerigraph"
-  :filterScreenprint="filterScreenprint"
-  :filterInkjet="filterInkjet"
-  :filterPhotomontage="filterPhotomontage"
-  :mutatedArtworks="mutatedArtworks"
-  :search="search"/>
-  <div id="carddiv">
+      :filterGelatinSilver="filterGelatinSilver"
+      :filterPigmentedInkjet="filterPigmentedInkjet"
+      :filterChromogenicColor="filterChromogenicColor"
+      :filterSilverDyeBleach="filterSilverDyeBleach"
+      :filterColorInstant="filterColorInstant"
+      :filterDyeTransfer="filterDyeTransfer"
+      :filterAlbumen="filterAlbumen"
+      :filterAmbrotype="filterAmbrotype"
+      :filterBromoil="filterBromoil"
+      :filterCalotype="filterCalotype"
+      :filterCarbonPrint="filterCarbonPrint"
+      :filterCollodion="filterCollodion"
+      :filterCyanotype="filterCyanotype"
+      :filterDaguerreotype="filterDaguerreotype"
+      :filterGumBichromate="filterGumBichromate"
+      :filterGumPlatinum="filterGumPlatinum"
+      :filterPlatinumPalladium="filterPlatinumPalladium"
+      :filterSaltedPaper="filterSaltedPaper"
+      :filterTintype="filterTintype"
+      :filterPrintingOutPaper="filterPrintingOutPaper"
+      :filterIntaglio="filterIntaglio"
+      :filterLithograph="filterLithograph"
+      :filterPhotogravure="filterPhotogravure"
+      :filterSerigraph="filterSerigraph"
+      :filterScreenprint="filterScreenprint"
+      :filterInkjet="filterInkjet"
+      :filterPhotomontage="filterPhotomontage"
+      :mutatedArtworks="mutatedArtworks"
+  />
+  <div v-if="artworks.length < 1" id="pageloadingdiv">
+    <p id="pageloading">Please wait<br>while the<br>page loads.</p>
+  </div>
+  <div v-else-if="mutatedArtworks.length < 1" id="carddiv">
     <ul class="cardlist">
       <li class="cardlistitem">
-          <Card class="row" :mutatedArtworks="mutatedArtworks" :artworks="artworks"/>
+          <Card class="row"
+          :artworks="artworks"
+          :departmentHeads="departmentHeads"/>
       </li>
     </ul>
-    </div>
+  </div>
+  <div v-else id="mutatedcarddiv">
+    <ul class="cardlist">
+      <li class="cardlistitem">
+        <mutatedArtworkCard class="row"
+        :mutatedArtworks="mutatedArtworks"
+        :departmentHeads="departmentHeads"/>
+      </li>
+      </ul>
+  </div v-else>
 </div>
 </template>
 
 <script>
 import Card from '@/components/Card';
+import mutatedArtworkCard from '@/components/mutatedArtworkCard';
 import Sidebar from '@/components/Sidebar';
+import moment from 'moment';
 
 export default {
   name: 'App',
   components: {
+    Sidebar,
     Card,
-    Sidebar
+    mutatedArtworkCard
   },
   data() {
     return {
       artistData: '',
-      momaAPI_Url: '../static/momaartworks.json',
+      momaArtworksAPI_Url: '../static/momaartworks.json',
+      momaDeptHeadsAPI_Url: '../static/momadepartmentheads.json',
       token: '',
+      momaArtworks: [],
+      departmentHeads: [],
       artworks: [],
-      mutatedArtworks: []
+      mutatedArtworks: [],
+      acquisitionDate: []
     };
   },
   mounted() {
-    fetch(this.momaAPI_Url)
-      .then(response => response.json())
-      .then(response => {
-        const artworks = response.filter(artwork => {
-          if (
-            artwork.Department === 'Photography' &&
-            artwork.ThumbnailURL != null
-          ) {
-            return artwork;
-          }
-        });
-        this.artworks = artworks.sort(function() {
-          return 0.5 - Math.random();
-        });
-      });
+    this.getDataForArtworks();
   },
   methods: {
+    getDataForArtworks() {
+      fetch(this.momaArtworksAPI_Url)
+        .then(response => response.json())
+        .then(response => {
+          const artworks = response.filter((artwork, index) => {
+            if (
+              artwork.Department === 'Photography' &&
+              artwork.ThumbnailURL != null
+            ) {
+              return artwork;
+            }
+          });
+          this.artworks = artworks.sort(() => {
+            return 0.5 - Math.random();
+          });
+          this.getDataForDeptHeads();
+        });
+    },
+    getDataForDeptHeads() {
+      fetch(this.momaDeptHeadsAPI_Url)
+        .then(response => response.json())
+        .then(response => {
+          let departmentHeads = response.filter(department => {
+            return (
+              department.DepartmentFullName === 'Department of Photography'
+            );
+          });
+          this.departmentHeads = departmentHeads;
+          this.formatDeptHeadData();
+        });
+    },
+    formatDeptHeadData() {
+      return this.departmentHeads.map(head => {
+        head.PositionBeginYear = new Date(
+          head.PositionBeginYear.toString() + '-' + '01' + '-' + '01'
+        );
+        if (head.PositionEndYear === '') {
+          head.PositionEndYear = new Date();
+        } else {
+          head.PositionEndYear = new Date(
+            head.PositionEndYear + '-' + '12' + '-' + '31'
+          );
+        }
+        return head;
+      });
+    },
+    getArtworkDate() {
+      return this.artworks
+        .filter(artwork => artwork.DateAcquired != null)
+        .map(artwork => {
+          this.acquisitionDate.push(
+            Object.create({
+              AcquisitionDate: artwork.DateAcquired,
+              ObjectID: artwork.ObjectID
+            })
+          );
+        });
+    },
     filterGelatinSilver() {
       let gelatinSilver = this.artworks.filter(
         artwork => artwork.Medium != null
@@ -92,7 +157,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringGelatinSilver.sort(function() {
+      this.mutatedArtworks = stringGelatinSilver.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -110,8 +175,7 @@ export default {
           return photograph;
         }
       });
-      console.log('Pigmented Inkjet', stringPigmentedInkjet.length);
-      this.mutatedArtworks = stringPigmentedInkjet.sort(function() {
+      this.mutatedArtworks = stringPigmentedInkjet.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -128,7 +192,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringChromogenicColor.sort(function() {
+      this.mutatedArtworks = stringChromogenicColor.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -145,7 +209,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringSilverDyeBleach.sort(function() {
+      this.mutatedArtworks = stringSilverDyeBleach.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -162,7 +226,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringColorInstant.sort(function() {
+      this.mutatedArtworks = stringColorInstant.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -177,7 +241,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringDyeTransfer.sort(function() {
+      this.mutatedArtworks = stringDyeTransfer.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -205,7 +269,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringAmbrotype.sort(function() {
+      this.mutatedArtworks = stringAmbrotype.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -220,7 +284,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringBromoil.sort(function() {
+      this.mutatedArtworks = stringBromoil.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -235,7 +299,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringCalotype.sort(function() {
+      this.mutatedArtworks = stringCalotype.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -250,7 +314,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringCarbonPrint.sort(function() {
+      this.mutatedArtworks = stringCarbonPrint.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -265,7 +329,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringCollodion.sort(function() {
+      this.mutatedArtworks = stringCollodion.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -280,7 +344,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringCyanotype.sort(function() {
+      this.mutatedArtworks = stringCyanotype.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -297,7 +361,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringDaguerreotype.sort(function() {
+      this.mutatedArtworks = stringDaguerreotype.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -314,7 +378,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringGumBichromate.sort(function() {
+      this.mutatedArtworks = stringGumBichromate.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -329,7 +393,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringGumPlatinum.sort(function() {
+      this.mutatedArtworks = stringGumPlatinum.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -344,7 +408,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringPlatinumPalladium.sort(function() {
+      this.mutatedArtworks = stringPlatinumPalladium.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -359,7 +423,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringSaltedPaper.sort(function() {
+      this.mutatedArtworks = stringSaltedPaper.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -374,7 +438,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringTintype.sort(function() {
+      this.mutatedArtworks = stringTintype.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -392,7 +456,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringPrintingOutPaper.sort(function() {
+      this.mutatedArtworks = stringPrintingOutPaper.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -407,7 +471,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringIntaglio.sort(function() {
+      this.mutatedArtworks = stringIntaglio.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -422,7 +486,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringLithograph.sort(function() {
+      this.mutatedArtworks = stringLithograph.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -437,7 +501,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringPhotogravure.sort(function() {
+      this.mutatedArtworks = stringPhotogravure.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -452,7 +516,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringSerigraph.sort(function() {
+      this.mutatedArtworks = stringSerigraph.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -467,7 +531,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringScreenprint.sort(function() {
+      this.mutatedArtworks = stringScreenprint.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -482,7 +546,7 @@ export default {
           return photograph;
         }
       });
-      this.mutatedArtworks = stringInkjet.sort(function() {
+      this.mutatedArtworks = stringInkjet.sort(() => {
         return 0.5 - Math.random();
       });
     },
@@ -498,13 +562,6 @@ export default {
         }
       });
       this.mutatedArtworks = stringPhotomontage;
-    },
-    search(input) {
-      const newArray = [];
-      let searchArray = this.artworks
-        .slice(0, 20)
-        .map((artwork, index) => newArray.push(Object.values(artwork)));
-      console.log(newArray);
     }
   }
 };
@@ -526,5 +583,11 @@ export default {
 
 li {
   list-style-type: none;
+}
+#pageloading {
+  font-size: 5rem;
+  align-self: center;
+  margin: 10vh 5vw 10vh 5vw;
+  text-align: center;
 }
 </style>

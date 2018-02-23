@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul v-for="artwork in artworks.sort()">
-      <li>{{artwork.Medium}}</li>
+      <li>{{artwork.DateAcquired}}</li>
     </ul>
 
   </div>

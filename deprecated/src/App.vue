@@ -1,6 +1,7 @@
 /* eslint-disable */
 <template>
 <div id="app">
+  <!-- <MediumList :artworks="artworks"/> -->
   <Sidebar class="sidebar" :mutatedArtworks="mutatedArtworks" :artworks="artworks"/>
   <div>
     <ul class="cardlist">
@@ -16,6 +17,7 @@
 import Card from '@/components/Card';
 import Sidebar from '@/components/Sidebar';
 import { getToken } from './lib/vanilla';
+// import MediumList from '@/components/MediumList';
 
 export default {
   name: 'App',
@@ -44,9 +46,8 @@ export default {
             return artwork;
           }
         });
-        this.artworks = artworks.slice(0, 50);
-      })
-      .then(getToken());
+        this.artworks = artworks;
+      });
   },
   methods: {}
 };
