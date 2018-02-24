@@ -231,8 +231,7 @@ export default {
     'filterSerigraph',
     'filterScreenprint',
     'filterInkjet',
-    'filterPhotomontage',
-    'search'
+    'filterPhotomontage'
   ]
 };
 </script>
