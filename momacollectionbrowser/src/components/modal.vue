@@ -111,7 +111,7 @@ export default {
 .modal-header {
   border-bottom: 1px solid #eeeeee;
   font-family: inherit;
-  font-size: 1.25rem;
+  font-size: 2rem;
   justify-content: space-between;
 }
 
@@ -123,6 +123,8 @@ export default {
 .modal-body {
   position: relative;
   padding: 20px 10px;
+  font-family: inherit;
+  font-size: 1.25rem;
 }
 
 .btn-close {
