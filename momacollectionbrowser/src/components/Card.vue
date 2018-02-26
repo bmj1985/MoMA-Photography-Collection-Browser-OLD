@@ -1,6 +1,6 @@
 <template>
-<div class="wrapper">
- <div class="card border-primary mb-3" style="max-width: 20rem;" v-for="artwork in artworks.slice(0,99)" :key="artwork.ObjectID" :departmentHeads="departmentHeads">
+<li class="listitem">
+ <div class="card border-primary mb-3" style="max-width: 20rem;">
   <div class="card-header">
     {{artwork.Medium}}
     </div>
@@ -14,33 +14,59 @@
     <img class="image" :src="artwork.ThumbnailURL" alt="">
     <p>{{artwork.Title}}</p>
     <p>{{artwork.Date}}</p>
-    <p class="togglearrow" @click="infoToggle = !infoToggle">&#9660;more info&#9660;</p>
-      <AttributeList :class="{ hidden : infoToggle }" :artwork="artwork"
-      :departmentHeads="departmentHeads"/>
+    <div id="moreinfo">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      @click="showModal"
+    >
+      more info
+    </button>
+
+    <PhotographModal
+      v-show="isModalVisible"
+      @close="closeModal"
+      :artwork="artwork"
+      :departmentHeads="departmentHeads"
+    />
+    </div>
   </div>
   </div>
 </div>
-</div>
+</li>
 </template>
 
 <script>
-import AttributeList from './AttributeList';
+import PhotographModal from '@/components/PhotographModal';
 
 export default {
   name: 'Card',
-  components: { AttributeList },
-  props: ['artworks', 'departmentHeads'],
+  components: { PhotographModal },
+  props: ['artwork', 'departmentHeads'],
   data() {
     return {
-      infoToggle: true
+      isModalVisible: false
     };
+  },
+  methods: {
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    }
   }
 };
 </script>
 
 <style scoped>
-.wrapper {
-  align-items: center;
+#moreinfo {
+  border: solid 1px lightgrey;
+  align-self: flex-end;
+}
+.listitem {
+  margin: 10px;
+  align-self: flex-start;
 }
 .card-body {
   display: flex;

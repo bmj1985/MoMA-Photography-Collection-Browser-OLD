@@ -1,13 +1,17 @@
 <template>
-<div>
+<div class="wrapper">
+  <div id="imagediv"><img :src="mutatedArtwork.ThumbnailURL" alt=""></div>
   <ul>
     <li>
-    <p>{{mutatedArtwork.Dimensions}}</p>
-    <p>{{mutatedArtwork.CreditLine}}</p>
+      <p>Title: {{mutatedArtwork.ObjectID}}</p>
+       <p>Title: {{mutatedArtwork.Title}}</p>
+      <p>Print Type: {{mutatedArtwork.Medium}}</p>
+    <p>Dimensions: {{mutatedArtwork.Dimensions}}</p>
+    <p>Credit: {{mutatedArtwork.CreditLine}}</p>
     <p>Acquisition Date: {{mutatedArtwork.DateAcquired}}</p>
     <p>Artist Bio: {{mutatedArtwork.ArtistBio[0]}}</p>
     <p>Gender: {{mutatedArtwork.Gender[0]}}</p>
-    <p>Department Head(s) at time of acquisition: {{mutatedCurator}}
+    <p>Department Head(s) at time of acquisition: {{curator}}
       </p>
     <p><a :href="mutatedArtwork.URL" target="_blank">Link to Moma Official Page</a></p>
     </li>
@@ -21,8 +25,8 @@ export default {
   name: 'mutatedAttributeList',
   data() {
     return {
-      date: this.mutatedArtwork.DateAcquired,
-      mutatedCurator: ''
+      mutatedDate: this.mutatedArtwork.DateAcquired,
+      curator: ''
     };
   },
   props: {
@@ -33,28 +37,35 @@ export default {
       type: Array
     }
   },
-  mounted() {
-    this.getSpecificCurator();
-  },
   methods: {
     getSpecificCurator() {
       return this.departmentHeads
         .filter(head => {
           if (
-            moment(new Date(this.date)).isBefore(head.PositionEndYear) &&
-            moment(new Date(this.date)).isAfter(head.PositionBeginYear)
+            moment(new Date(this.mutatedDate)).isBefore(head.PositionEndYear) &&
+            moment(new Date(this.mutatedDate)).isAfter(head.PositionBeginYear)
           ) {
             return head;
           }
         })
         .forEach(head => {
-          this.mutatedCurator = head.DisplayName;
+          this.curator = head.DisplayName;
+          console.log(this.curator);
         });
     }
+  },
+  mounted() {
+    this.getSpecificCurator();
   }
 };
 </script>
 
 <style scoped>
-
+.wrapper {
+  display: flex;
+  padding: 1vh;
+}
+#imagediv {
+  align-self: flex-start;
+}
 </style>

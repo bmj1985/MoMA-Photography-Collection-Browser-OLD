@@ -1,6 +1,6 @@
 <template>
-<div class="wrapper">
- <div class="card border-primary mb-3" style="max-width: 20rem;" v-for="mutatedArtwork in mutatedArtworks.slice(0,99)" :key="mutatedArtwork.ObjectID" :departmentHeads="departmentHeads">
+<li class="listitem">
+ <div class="card border-primary mb-3" style="max-width: 20rem;">
   <div class="card-header">
     {{mutatedArtwork.Medium}}
     </div>
@@ -8,45 +8,65 @@
     <ul>
   <li>{{mutatedArtwork.name}}</li>
   </ul>
-    <h4 class="card-title" @click="getCardsByArtist()">
+    <h4 class="card-title">
       {{mutatedArtwork.Artist[0]}}
       </h4>
     <img class="image" :src="mutatedArtwork.ThumbnailURL" alt="">
     <p>{{mutatedArtwork.Title}}</p>
     <p>{{mutatedArtwork.Date}}</p>
-    <p class="togglearrow" @click="infoToggle = !infoToggle">&#9660;more info&#9660;</p>
-      <mutatedAttributeList :class="{ hidden : infoToggle }" :mutatedArtwork="mutatedArtwork"
-      :departmentHeads="departmentHeads"/>
+    <div id="moreinfo">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      @click="showModal"
+    >
+      more info
+    </button>
+
+    <mutatedPhotographModal
+      v-show="isModalVisible"
+      @close="closeModal"
+      :mutatedArtwork="mutatedArtwork"
+      :departmentHeads="departmentHeads"
+    />
+    </div>
   </div>
   </div>
 </div>
-</div>
+</li>
 </template>
 
 <script>
-import mutatedAttributeList from './mutatedAttributeList';
-import moment from 'moment';
+import mutatedPhotographModal from '@/components/mutatedPhotographModal';
 
 export default {
-  name: 'mutatedArtworkCard',
-  components: { mutatedAttributeList },
-  props: [
-    'mutatedArtworks',
-    'departmentHeads',
-    'getCardsByArtist',
-    'cardsByArtist'
-  ],
+  name: 'Card',
+  components: { mutatedPhotographModal },
+  props: ['mutatedArtwork', 'departmentHeads'],
   data() {
     return {
-      infoToggle: true
+      isModalVisible: false
     };
+  },
+  methods: {
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    }
   }
 };
 </script>
 
 <style scoped>
-.wrapper {
-  align-items: center;
+#moreinfo {
+  border: solid 1px lightgrey;
+  align-self: flex-end;
+}
+.listitem {
+  margin: 10px;
+  align-self: flex-start;
 }
 .card-body {
   display: flex;
