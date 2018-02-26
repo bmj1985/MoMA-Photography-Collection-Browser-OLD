@@ -23,9 +23,7 @@
       <li class="cardlistitem">
         <mutatedArtworkCard class="row"
         :mutatedArtworks="mutatedArtworks"
-        :departmentHeads="departmentHeads"
-        :getCardsByArtist="getCardsByArtist"
-        :cardsByArtist="cardsByArtist"/>
+        :departmentHeads="departmentHeads"/>
       </li>
       </ul>
   </div v-else>
