@@ -8,7 +8,7 @@
     <ul>
   <li>{{mutatedArtwork.name}}</li>
   </ul>
-    <h4 class="card-title">
+    <h4 class="card-title" @click="getCardsByArtist()">
       {{mutatedArtwork.Artist[0]}}
       </h4>
     <img class="image" :src="mutatedArtwork.ThumbnailURL" alt="">
@@ -30,7 +30,12 @@ import moment from 'moment';
 export default {
   name: 'mutatedArtworkCard',
   components: { mutatedAttributeList },
-  props: ['mutatedArtworks', 'departmentHeads'],
+  props: [
+    'mutatedArtworks',
+    'departmentHeads',
+    'getCardsByArtist',
+    'cardsByArtist'
+  ],
   data() {
     return {
       infoToggle: true
