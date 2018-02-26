@@ -4,7 +4,7 @@
     <div class="modal">
       <header class="modal-header">
         <slot name="header" class="modal-title">
-          {{artwork.Artist[0]}}
+          {{mutatedArtwork.Artist[0]}}
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"
             @click="close"
           >
@@ -14,7 +14,7 @@
       </header>
       <section class="modal-body">
         <slot name="body">
-         <AttributeList :artwork="artwork" :departmentHeads="departmentHeads"/>
+         <mutatedAttributeList :mutatedArtwork="mutatedArtwork" :departmentHeads="departmentHeads"/>
         </slot>
        </section>
        <footer class="modal-footer">
@@ -35,11 +35,11 @@
 </template>
 
 <script>
-import AttributeList from '@/components/AttributeList';
+import mutatedAttributeList from '@/components/mutatedAttributeList';
 export default {
   name: 'PhotographModal',
-  components: { AttributeList },
-  props: ['artwork', 'departmentHeads'],
+  components: { mutatedAttributeList },
+  props: ['mutatedArtwork', 'departmentHeads'],
   methods: {
     close() {
       this.$emit('close');

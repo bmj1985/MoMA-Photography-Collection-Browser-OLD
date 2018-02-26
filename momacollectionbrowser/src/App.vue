@@ -22,9 +22,11 @@
   </div>
   <div v-else id="mutatedcarddiv">
     <ul class="cardlist">
-      <li class="cardlistitem">
-        <mutatedArtworkCard class="row"
-        :mutatedArtworks="mutatedArtworks"
+      <li class="row">
+        <mutatedArtworkCard
+        v-for="mutatedArtwork in mutatedArtworks.slice(0,99)"
+        :key="mutatedArtwork.ObjectID"
+        :mutatedArtwork="mutatedArtwork"
         :departmentHeads="departmentHeads"/>
       </li>
       </ul>
