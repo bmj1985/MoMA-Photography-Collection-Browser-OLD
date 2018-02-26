@@ -4,17 +4,6 @@
     <h2>MOMA Photography Collection Browser</h2>
 <form>
   <fieldset>
-    <!-- <legend>Date Range</legend>
-     <div class="slider-group row">
-      <label for="slider1" class="col-sm-2 col-form-label">Year Start (1839)</label>
-      <div class="col-sm-10">
-             <input class="slider" id="slider1" type="range" min="1839" max="2018" step="10" value="1839"/>
-      </div>
-      <label for="slider2" class="col-sm-2 col-form-label">Year End (Present)</label>
-      <div class="col-sm-10">
-             <input class="slider" id="slider2" type="range" min="1839" max="2018" step="10" value="2018"/>
-      </div>
-      </div> -->
       <legend>Print Type</legend>
       <div class="form-check">
         <h6>Gelatin Silver</h6>
@@ -184,19 +173,8 @@
         </label>
       </div>
   </fieldset>
-  <!-- <div class="form-group">
-  <label class="col-form-label" for="inputDefault">Search:</label>
-  <input class="form-control" placeholder="Search criteria" id="inputDefault" type="text">
-</div> -->
-    <!-- <button @click.prevent="search" type="submit" class="btn btn-primary">Submit</button> -->
   </fieldset>
 </form>
-<a href="http://dx.doi.org/10.5281/zenodo.1163802"
-rel="nofollow"><img id="momaattribution" src="https://camo.githubusercontent.com/
-7ea321b31bf12352ff70f2f5dc672e82208b2738/68747470733a2f2f7a6
-56e6f646f2e6f72672f62616467652f646f692f31302e353238312f7a656e6f646f2e313136333830322e737667"
-alt="DOI" data-canonical-src="https://zenodo.org/badge/doi/10.5281/zenodo.1163802.svg"
- style="max-width:100%;"></a>
  <button
       type="button"
       class="btn btn-primary aboutbutton"
@@ -208,15 +186,26 @@ alt="DOI" data-canonical-src="https://zenodo.org/badge/doi/10.5281/zenodo.116380
     <modal
       v-show="isModalVisible"
       @close="closeModal"
-    />
+    >
+    <h2 slot="header">ABOUT MOMA PHOTOGRPAHY COLLECTION BROWSER</h2>
+    <div slot="body"><AboutText/></div>
+    <footer slot="footer"><p>Copyright Brandon Johnson 2018</p></footer>
+    </modal>
+<a href="http://dx.doi.org/10.5281/zenodo.1163802"
+rel="nofollow" target="blank"><img id="momaattribution" src="https://camo.githubusercontent.com/
+7ea321b31bf12352ff70f2f5dc672e82208b2738/68747470733a2f2f7a6
+56e6f646f2e6f72672f62616467652f646f692f31302e353238312f7a656e6f646f2e313136333830322e737667"
+alt="DOI" data-canonical-src="https://zenodo.org/badge/doi/10.5281/zenodo.1163802.svg"
+ style="max-width:100%;"></a>
 </div>
 </template>
 
 <script>
 import modal from '@/components/modal';
+import AboutText from '@/components/AboutText';
 export default {
   name: 'Sidebar',
-  components: { modal },
+  components: { modal, AboutText },
   props: [
     'mutatedArtworks',
     'filterGelatinSilver',

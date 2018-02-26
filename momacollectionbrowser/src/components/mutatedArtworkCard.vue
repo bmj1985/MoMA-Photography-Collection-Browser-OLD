@@ -14,9 +14,24 @@
     <img class="image" :src="mutatedArtwork.ThumbnailURL" alt="">
     <p>{{mutatedArtwork.Title}}</p>
     <p>{{mutatedArtwork.Date}}</p>
-    <p class="togglearrow" @click="infoToggle = !infoToggle">&#9660;more info&#9660;</p>
-      <mutatedAttributeList :class="{ hidden : infoToggle }" :mutatedArtwork="mutatedArtwork"
-      :departmentHeads="departmentHeads"/>
+    <button
+      type="button"
+      class="btn"
+      @click="showModal"
+    >
+      more info
+    </button>
+     <modal
+      v-show="isModalVisible"
+      @close="closeModal"
+      :mutatedArtwork="mutatedArtwork"
+      :departmentHeads="departmentHeads"
+    >
+    <h2 slot="header">{{mutatedArtwork.Artist[0]}}</h2>
+    <mutatedAttributeList slot="body" :mutatedArtwork="mutatedArtwork"
+      :departmentHeads="departmentHeads"></mutatedAttributeList>
+    <footer slot="footer"><p>Information courtesy Museum of Modern Art</p></footer>
+    </modal>
   </div>
   </div>
 </div>
@@ -24,12 +39,13 @@
 </template>
 
 <script>
-import mutatedAttributeList from './mutatedAttributeList';
+import modal from './modal';
 import moment from 'moment';
+import mutatedAttributeList from '@/components/mutatedAttributeList';
 
 export default {
   name: 'mutatedArtworkCard',
-  components: { mutatedAttributeList },
+  components: { modal, mutatedAttributeList },
   props: [
     'mutatedArtworks',
     'departmentHeads',
@@ -38,8 +54,16 @@ export default {
   ],
   data() {
     return {
-      infoToggle: true
+      isModalVisible: false
     };
+  },
+  methods: {
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    }
   }
 };
 </script>
@@ -57,10 +81,6 @@ export default {
 }
 .hidden {
   display: none;
-}
-
-.togglearrow {
-  text-align: right;
 }
 #toolong {
   font-size: 5rem;

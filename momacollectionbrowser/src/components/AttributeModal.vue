@@ -4,21 +4,20 @@
     <div class="modal">
       <header class="modal-header">
         <slot name="header" class="modal-title">
-          Modal Title Goes Here</slot>
+          ABOUT THE MOMA PHOTOGRAPHY COLLECTION BROWSER
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"
             @click="close"
           >
             x
           </button>
+        </slot>
       </header>
       <section class="modal-body">
-        <slot name="body">
-          The body goes here.
-        </slot>
+ 
        </section>
        <footer class="modal-footer">
           <slot name="footer">
-            Footer goes here.</slot>
+            Copyright Brandon Johnson 2018
             <button
               type="button"
               class="btn btn-secondary"
@@ -26,6 +25,7 @@
             >
               Close
           </button>
+        </slot>
       </footer>
     </div>
   </div>
@@ -33,11 +33,36 @@
 </template>
 
 <script>
+import moment from 'moment';
 export default {
-  name: 'modal',
+  name: 'AttributeModal',
+  data() {
+    return {
+      date: this.mutatedArtwork.DateAcquired,
+      mutatedCurator: ''
+    };
+  },
+  props: ['mutatedArtwork', 'departmentHeads'],
+  mounted() {
+    this.getSpecificCurator();
+  },
   methods: {
     close() {
       this.$emit('close');
+    },
+    getSpecificCurator() {
+      return this.departmentHeads
+        .filter(head => {
+          if (
+            moment(new Date(this.date)).isBefore(head.PositionEndYear) &&
+            moment(new Date(this.date)).isAfter(head.PositionBeginYear)
+          ) {
+            return head;
+          }
+        })
+        .forEach(head => {
+          this.mutatedCurator = head.DisplayName;
+        });
     }
   }
 };
@@ -90,5 +115,20 @@ export default {
   padding: 20px 10px;
   font-family: inherit;
   font-size: 1.25rem;
+}
+
+.btn-close {
+  border: none;
+  font-size: 20px;
+  padding: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  background: transparent;
+}
+
+.btn {
+  color: white;
+  border: 1px solid black;
+  border-radius: 2px;
 }
 </style>
