@@ -9,12 +9,14 @@
   <div v-if="artworks.length < 1" id="pageloadingdiv">
     <p id="pageloading">Please wait<br>while the<br>page loads.</p>
   </div>
-  <div v-else-if="mutatedArtworks.length < 1" id="carddiv">
+  <div v-else-if="mutatedArtworks.length < 1" id="carddiv" >
     <ul class="cardlist">
-      <li class="cardlistitem">
-          <Card class="row"
-          :artworks="artworks"
-          :departmentHeads="departmentHeads"/>
+      <li class="row">
+          <Card
+          :artwork="artwork"
+          :departmentHeads="departmentHeads" v-for="artwork in artworks.slice(0,99)"
+          :key="artwork.ObjectID"
+          />
       </li>
     </ul>
   </div>
@@ -159,8 +161,8 @@ export default {
 #app {
   display: flex;
 }
-.card {
-  margin: 1vw;
+.cardlistitem {
+  margin: 10px;
 }
 
 .sidebar {
@@ -175,7 +177,7 @@ li {
 #pageloading {
   font-size: 5rem;
   align-self: center;
-  margin: 10vh 5vw 10vh 5vw;
+  margin: 20vh auto auto 20vw;
   text-align: center;
 }
 </style>

@@ -1,9 +1,13 @@
 <template>
-<div>
+<div class="wrapper">
+  <div id="imagediv"><img :src="artwork.ThumbnailURL" alt=""></div>
   <ul>
     <li>
-    <p>{{artwork.Dimensions}}</p>
-    <p>{{artwork.CreditLine}}</p>
+      <p>Title: {{artwork.ObjectID}}</p>
+       <p>Title: {{artwork.Title}}</p>
+      <p>Print Type: {{artwork.Medium}}</p>
+    <p>Dimensions: {{artwork.Dimensions}}</p>
+    <p>Credit: {{artwork.CreditLine}}</p>
     <p>Acquisition Date: {{artwork.DateAcquired}}</p>
     <p>Artist Bio: {{artwork.ArtistBio[0]}}</p>
     <p>Gender: {{artwork.Gender[0]}}</p>
@@ -53,5 +57,11 @@ export default {
 </script>
 
 <style scoped>
-
+.wrapper {
+  display: flex;
+  padding: 1vh;
+}
+#imagediv {
+  align-self: flex-start;
+}
 </style>
