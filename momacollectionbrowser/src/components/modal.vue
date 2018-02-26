@@ -1,14 +1,30 @@
+// <div class="modal">
+//   <div class="modal-dialog" role="document">
+//     <div class="modal-content">
+//       <div class="modal-header">
+//         <h5 class="modal-title">Modal title</h5>
+//         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+//           <span aria-hidden="true">&times;</span>
+//         </button>
+//       </div>
+//       <div class="modal-body">
+//         <p>Modal body text goes here.</p>
+//       </div>
+//       <div class="modal-footer">
+//         <button type="button" class="btn btn-primary">Save changes</button>
+//         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+//       </div>
+//     </div>
+//   </div>
+// </div>
 <template>
 <transition name="modal-fade">
   <div class="modal-backdrop">
     <div class="modal">
       <header class="modal-header">
-        <slot name="header">
-          This is the default tile!
-
-          <button
-            type="button"
-            class="btn-close"
+        <slot name="header" class="modal-title">
+          ABOUT THE MOMA PHOTOGRAPHY COLLECTION BROWSER
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"
             @click="close"
           >
             x
@@ -17,19 +33,31 @@
       </header>
       <section class="modal-body">
         <slot name="body">
-          I'm the default body!
+          <p>The Museum of Modern Art has been instrumental in the history of photography,
+             and has one of the most extensive photography collections in the world.  
+             Although their own website is searchable and even sortable by year, 
+             it does not give easily to browsing and discovery.</p>
+          <p>
+            This site was created in the hopes of making photography and photographers
+             in the museum's collection easier to discover.  Currently the browser 
+             supports browsing by print type, and shows a random selection each time 
+             the radio buttons are clicked. Future implementations will have added 
+             searching and browsing capabilities.
+          </p>
+          <p>You can find me on Github at <a href="https://github.com/bmj1985" target="blank">
+          https://github.com/bmj1985</a> or feel free to contact me at bmj1985@gmail.com. </p>
+          <p>Best, Brandon</p>
         </slot>
        </section>
        <footer class="modal-footer">
           <slot name="footer">
-            I'm the default footer!
-
+            Copyright Brandon Johnson 2018
             <button
               type="button"
-              class="btn-green"
+              class="btn btn-secondary"
               @click="close"
             >
-              Close me!
+              Close
           </button>
         </slot>
       </footer>
@@ -51,7 +79,7 @@ export default {
 </script>
 
 <style scoped>
-<style > .modal-backdrop {
+.modal-backdrop {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -69,6 +97,9 @@ export default {
   overflow-x: auto;
   display: flex;
   flex-direction: column;
+  height: 75vh;
+  width: 75vw;
+  margin: auto;
 }
 
 .modal-header,
@@ -79,13 +110,14 @@ export default {
 
 .modal-header {
   border-bottom: 1px solid #eeeeee;
-  color: #4aae9b;
+  font-family: inherit;
+  font-size: 1.25rem;
   justify-content: space-between;
 }
 
 .modal-footer {
   border-top: 1px solid #eeeeee;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .modal-body {
@@ -99,25 +131,12 @@ export default {
   padding: 20px;
   cursor: pointer;
   font-weight: bold;
-  color: #4aae9b;
   background: transparent;
 }
 
 .btn-green {
   color: white;
-  background: #4aae9b;
-  border: 1px solid #4aae9b;
+  border: 1px solid black;
   border-radius: 2px;
 }
-.modal-fade-enter,
-.modal-fade-leave-active {
-  opacity: 0;
-}
-
-.modal-fade-enter-active,
-.modal-fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-</style>
-
 </style>

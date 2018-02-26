@@ -199,10 +199,10 @@ alt="DOI" data-canonical-src="https://zenodo.org/badge/doi/10.5281/zenodo.116380
  style="max-width:100%;"></a>
  <button
       type="button"
-      class="btn"
+      class="btn btn-primary aboutbutton"
       @click="showModal"
     >
-      Open Modal!
+      About
     </button>
 
     <modal
@@ -216,7 +216,7 @@ alt="DOI" data-canonical-src="https://zenodo.org/badge/doi/10.5281/zenodo.116380
 import modal from '@/components/modal';
 export default {
   name: 'Sidebar',
-  components: { About },
+  components: { modal },
   props: [
     'mutatedArtworks',
     'filterGelatinSilver',
@@ -264,6 +264,10 @@ export default {
 </script>
 
 <style scoped>
+.aboutbutton {
+  margin: 30px 0px 10px 0px;
+  width: 18vw;
+}
 #randombutton {
   margin: 10px 0 10px 0;
 }
