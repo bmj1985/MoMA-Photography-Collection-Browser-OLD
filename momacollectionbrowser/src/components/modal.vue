@@ -27,7 +27,7 @@
           </p>
           <p>You can find me on Github at <a href="https://github.com/bmj1985" target="blank">
           https://github.com/bmj1985</a> or feel free to contact me at bmj1985@gmail.com. </p>
-          <p>Best, Brandon</p>
+          <p>Brandon Johnson</p>
         </slot>
        </section>
        <footer class="modal-footer">
@@ -75,12 +75,12 @@ export default {
 .modal {
   background: #ffffff;
   box-shadow: 2px 2px 20px 1px;
-  overflow-x: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   height: 75vh;
   width: 75vw;
-  margin: auto;
+  margin: auto auto auto 20vw;
 }
 
 .modal-header,
