@@ -48,7 +48,9 @@
       <li class="cardlistitem">
         <mutatedArtworkCard class="row"
         :mutatedArtworks="mutatedArtworks"
-        :departmentHeads="departmentHeads"/>
+        :departmentHeads="departmentHeads"
+        :getCardsByArtist="getCardsByArtist"
+        :cardsByArtist="cardsByArtist"/>
       </li>
       </ul>
   </div v-else>
@@ -78,7 +80,8 @@ export default {
       departmentHeads: [],
       artworks: [],
       mutatedArtworks: [],
-      acquisitionDate: []
+      acquisitionDate: [],
+      cardsByArtist: []
     };
   },
   mounted() {
@@ -562,6 +565,20 @@ export default {
         }
       });
       this.mutatedArtworks = stringPhotomontage;
+    },
+    getCardsByArtist(input) {
+      return this.mutatedArtworks.filter(artwork => artwork.Artist[0]);
+    },
+    filterGelatinSilver(searchTerm) {
+      let noNull = this.artworks.filter(artwork => artwork.Medium != null);
+      let byArtist = noNull.filter(photograph => {
+        if (photograph.Artist[0].toLowerCase().includes() === true) {
+          return photograph;
+        }
+      });
+      this.mutatedArtworks = stringGelatinSilver.sort(() => {
+        return 0.5 - Math.random();
+      });
     }
   }
 };

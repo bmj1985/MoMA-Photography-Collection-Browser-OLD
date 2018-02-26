@@ -197,12 +197,26 @@ rel="nofollow"><img id="momaattribution" src="https://camo.githubusercontent.com
 56e6f646f2e6f72672f62616467652f646f692f31302e353238312f7a656e6f646f2e313136333830322e737667"
 alt="DOI" data-canonical-src="https://zenodo.org/badge/doi/10.5281/zenodo.1163802.svg"
  style="max-width:100%;"></a>
-  </div>
+ <button
+      type="button"
+      class="btn btn-primary aboutbutton"
+      @click="showModal"
+    >
+      About
+    </button>
+
+    <modal
+      v-show="isModalVisible"
+      @close="closeModal"
+    />
+</div>
 </template>
 
 <script>
+import modal from '@/components/modal';
 export default {
   name: 'Sidebar',
+  components: { modal },
   props: [
     'mutatedArtworks',
     'filterGelatinSilver',
@@ -232,11 +246,28 @@ export default {
     'filterScreenprint',
     'filterInkjet',
     'filterPhotomontage'
-  ]
+  ],
+  data() {
+    return {
+      isModalVisible: false
+    };
+  },
+  methods: {
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    }
+  }
 };
 </script>
 
 <style scoped>
+.aboutbutton {
+  margin: 30px 0px 10px 0px;
+  width: 18vw;
+}
 #randombutton {
   margin: 10px 0 10px 0;
 }
@@ -249,5 +280,8 @@ h6 {
 }
 #momaattribution {
   margin: 30px 0px 10px 0px;
+}
+.hidden {
+  display: none;
 }
 </style>
