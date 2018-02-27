@@ -4,7 +4,7 @@
     <div class="modal">
       <header class="modal-header">
         <slot name="header" class="modal-title">
-          {{artwork.Artist[0]}}
+          {{artwork.Title}}
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"
             @click="close"
           >

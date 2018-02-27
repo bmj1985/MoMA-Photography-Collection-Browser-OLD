@@ -3,9 +3,9 @@
   <div id="imagediv"><img :src="artwork.ThumbnailURL" alt=""></div>
   <ul>
     <li>
+      <p>Artist Name: {{artwork.Artist[0]}}</p>
       <p>Artist Bio: {{artwork.ArtistBio[0]}}</p>
       <p>Gender: {{artwork.Gender[0]}}</p>
-      <p>Title: {{artwork.Title}}</p>
       <p>Print Type: {{artwork.Medium}}</p>
       <p>Dimensions: {{artwork.Dimensions}}</p>
     <p>Credit: {{artwork.CreditLine}}</p>
