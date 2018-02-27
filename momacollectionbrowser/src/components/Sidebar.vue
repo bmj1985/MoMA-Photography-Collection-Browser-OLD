@@ -172,7 +172,6 @@
     >
       About
     </button>
-
     <modal
       v-show="isModalVisible"
       @close="closeModal"
@@ -191,7 +190,12 @@ import modal from '@/components/modal';
 export default {
   name: 'Sidebar',
   components: { modal },
-  props: ['filterPhotographs', 'mutatedArtworks', 'filterGelatinSilver'],
+  props: [
+    'filterPhotographs',
+    'mutatedArtworks',
+    'filterGelatinSilver',
+    'getRandomPhotographs'
+  ],
   data() {
     return {
       isModalVisible: false
