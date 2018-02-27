@@ -3,14 +3,13 @@
   <div id="imagediv"><img :src="mutatedArtwork.ThumbnailURL" alt=""></div>
   <ul>
     <li>
-      <p>Title: {{mutatedArtwork.ObjectID}}</p>
-       <p>Title: {{mutatedArtwork.Title}}</p>
+      <p>Artist Bio: {{mutatedArtwork.ArtistBio[0]}}</p>
+      <p>Gender: {{mutatedArtwork.Gender[0]}}</p>
+      <p>Title: {{mutatedArtwork.Title}}</p>
       <p>Print Type: {{mutatedArtwork.Medium}}</p>
-    <p>Dimensions: {{mutatedArtwork.Dimensions}}</p>
+      <p>Dimensions: {{mutatedArtwork.Dimensions}}</p>
     <p>Credit: {{mutatedArtwork.CreditLine}}</p>
     <p>Acquisition Date: {{mutatedArtwork.DateAcquired}}</p>
-    <p>Artist Bio: {{mutatedArtwork.ArtistBio[0]}}</p>
-    <p>Gender: {{mutatedArtwork.Gender[0]}}</p>
     <p>Department Head(s) at time of acquisition: {{curator}}
       </p>
     <p><a :href="mutatedArtwork.URL" target="_blank">Link to Moma Official Page</a></p>
