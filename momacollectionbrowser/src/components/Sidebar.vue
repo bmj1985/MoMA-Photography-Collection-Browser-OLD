@@ -3,7 +3,9 @@
   <div>
     <h2>MOMA Photography Collection Browser</h2>
 <form>
-  <fieldset>
+      <div class="form-group">
+        <button id="random" @click="getRandomPhotographs" type="submit" class="btn btn-primary btn-sm">Get Random Photographs</button></div>
+<fieldset>
       <legend>Print Type</legend>
       <div class="form-check">
         <h6>Gelatin Silver</h6>
@@ -207,6 +209,9 @@ export default {
 </script>
 
 <style scoped>
+#random {
+  margin: 10px;
+}
 .aboutbutton {
   margin: 30px 0px 10px 0px;
   width: 18vw;

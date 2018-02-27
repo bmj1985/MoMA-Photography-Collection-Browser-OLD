@@ -5,6 +5,7 @@
       :filterPhotographs="filterPhotographs"
       :filterGelatinSilver="filterGelatinSilver"
       :mutatedArtworks="mutatedArtworks"
+      :getRandomPhotographs="getRandomPhotographs"
   />
   <div v-if="artworks.length < 1" id="pageloadingdiv">
     <p id="pageloading">Please wait<br>while the<br>page loads.</p>
@@ -152,6 +153,12 @@ export default {
         }
       });
       this.mutatedArtworks = photographsByType.sort(() => {
+        return 0.5 - Math.random();
+      });
+    },
+    getRandomPhotographs() {
+      this.mutatedArtworks = [];
+      this.artworks.sort(() => {
         return 0.5 - Math.random();
       });
     }
