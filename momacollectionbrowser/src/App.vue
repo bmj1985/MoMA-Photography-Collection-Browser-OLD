@@ -52,13 +52,10 @@ export default {
       artistData: '',
       momaArtworksAPI_Url: '../static/momaartworks.json',
       momaDeptHeadsAPI_Url: '../static/momadepartmentheads.json',
-      token: '',
-      momaArtworks: [],
       departmentHeads: [],
       artworks: [],
       mutatedArtworks: [],
-      acquisitionDate: [],
-      cardsByArtist: []
+      acquisitionDate: []
     };
   },
   mounted() {
