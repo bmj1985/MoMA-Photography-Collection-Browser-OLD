@@ -1,6 +1,9 @@
 <template>
 <div class="wrapper">
+  <div class="imagedatewrapper">
   <div id="imagediv"><img :src="artwork.ThumbnailURL" alt=""></div>
+  <div id="photodate"><p>{{artwork.Date}}</p></div>
+  </div>
   <ul>
     <li>
       <p>Artist Name: {{artwork.Artist[0]}}</p>
@@ -56,11 +59,21 @@ export default {
 </script>
 
 <style scoped>
+.imagedatewrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#photodate {
+  align-self: center;
+  margin-top: 20px;
+}
 .wrapper {
   display: flex;
   padding: 1vh;
+  margin: 1vh;
 }
 #imagediv {
-  align-self: flex-start;
+  align-self: center;
 }
 </style>

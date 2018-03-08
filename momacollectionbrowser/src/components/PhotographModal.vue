@@ -14,7 +14,7 @@
       </header>
       <section class="modal-body">
         <slot name="body">
-         <AttributeList :artwork="artwork" :departmentHeads="departmentHeads"/>
+         <AttributeList :close="close" :artwork="artwork" :departmentHeads="departmentHeads"/>
         </slot>
        </section>
        <footer class="modal-footer">
