@@ -4,13 +4,13 @@
   <ul>
     <li>
       <p>Artist Name: {{mutatedArtwork.Artist[0]}}</p>
-      <p>Artist Bio: {{mutatedArtwork.ArtistBio[0]}}</p>
-      <p>Gender: {{mutatedArtwork.Gender[0]}}</p>
-      <p>Print Type: {{mutatedArtwork.Medium}}</p>
-      <p>Dimensions: {{mutatedArtwork.Dimensions}}</p>
+      <p v-show="mutatedArtwork.ArtistBio.length > 0">Artist Bio: {{mutatedArtwork.ArtistBio[0]}}</p>
+      <p v-show="mutatedArtwork.Gender.length > 0">Gender: {{mutatedArtwork.Gender[0]}}</p>
+      <p v-show="mutatedArtwork.Medium.length > 0">Print Type: {{mutatedArtwork.Medium}}</p>
+      <p v-show="mutatedArtwork.Dimensions.length > 0">Dimensions: {{mutatedArtwork.Dimensions}}</p>
     <p>Credit: {{mutatedArtwork.CreditLine}}</p>
     <p>Acquisition Date: {{mutatedArtwork.DateAcquired}}</p>
-    <p>Department Head(s) at time of acquisition: {{curator}}
+    <p >Department Head(s) at time of acquisition: {{curator}}
       </p>
     <p><a :href="mutatedArtwork.URL" target="_blank">Link to Moma Official Page</a></p>
     </li>
@@ -49,7 +49,6 @@ export default {
         })
         .forEach(head => {
           this.curator = head.DisplayName;
-          console.log(this.curator);
         });
     }
   },

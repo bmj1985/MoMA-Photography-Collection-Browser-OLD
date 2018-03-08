@@ -1,6 +1,6 @@
 <template>
   <div id="card">
-    <img :src="artwork.ThumbnailURL" alt="Card image">
+     <img :src="artwork.ThumbnailURL" alt="Card image">
     <button
       type="button"
       class="btn btn-secondary"

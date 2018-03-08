@@ -6,6 +6,7 @@
       :filterGelatinSilver="filterGelatinSilver"
       :mutatedArtworks="mutatedArtworks"
       :getRandomPhotographs="getRandomPhotographs"
+      :search="search"
   />
   <div v-if="artworks.length < 1" id="pageloadingdiv">
     <p id="pageloading">Please wait<br>while the<br>page loads.</p>
@@ -61,6 +62,7 @@ export default {
   mounted() {
     this.getDataForArtworks();
   },
+  computed: {},
   methods: {
     getDataForArtworks() {
       fetch(this.momaArtworksAPI_Url)
@@ -158,6 +160,53 @@ export default {
       this.artworks.sort(() => {
         return 0.5 - Math.random();
       });
+    },
+    filterArray(array, searchTerm) {
+      let formattedSearchTerm = searchTerm.replace(/-|\s/g, '').toLowerCase();
+      if (
+        Array.isArray(array) === true &&
+        array[0] !== undefined &&
+        array[0] !== null &&
+        typeof array[0] != 'number' &&
+        array[0]
+          .toString()
+          .replace(/-|\s/g, '')
+          .toLowerCase()
+          .includes(formattedSearchTerm)
+      ) {
+        return true;
+      }
+      return false;
+    },
+    filterString(string, searchTerm) {
+      let formattedSearchTerm = searchTerm.replace(/-|\s/g, '').toLowerCase();
+      if (
+        typeof string === 'string' &&
+        string
+          .replace(/-|\s/g, '')
+          .toLowerCase()
+          .includes(formattedSearchTerm)
+      ) {
+        return true;
+      }
+      return false;
+    },
+    search(searchTerm) {
+      let searchArray = this.artworks.filter(photograph => {
+        return (
+          Object.values(photograph).filter(value => {
+            if (this.filterString(value, searchTerm) === true) {
+              return true;
+            } else if (this.filterArray(value, searchTerm) === true) {
+              return true;
+            }
+            return false;
+          }).length > 0
+        );
+      });
+      this.mutatedArtworks = searchArray.sort(() => {
+        return 0.5 - Math.random();
+      });
     }
   }
 };
@@ -167,6 +216,7 @@ export default {
 #app {
   display: flex;
 }
+
 .cardlistitem {
   margin: 10px;
 }
@@ -179,6 +229,9 @@ export default {
 
 li {
   list-style-type: none;
+}
+#pageloadingdiv {
+  display: flex;
 }
 #pageloading {
   font-size: 5rem;

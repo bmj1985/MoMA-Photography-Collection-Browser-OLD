@@ -1,6 +1,6 @@
 <template>
   <div id="card">
-    <img :src="mutatedArtwork.ThumbnailURL" alt="Card image">
+    <img :src="thumbnailUrl" alt="Card image">
     <button
       type="button"
       class="btn btn-secondary"
@@ -25,10 +25,18 @@ export default {
   props: ['mutatedArtwork', 'departmentHeads'],
   data() {
     return {
-      isModalVisible: false
+      isModalVisible: false,
+      thumbnailUrl: this.mutatedArtwork.ThumbnailURL
     };
   },
+  mounted() {
+    this.replaceHttp(this.thumbnailUrl);
+  },
   methods: {
+    replaceHttp(url) {
+      url = url.replace(/^http:\/\//i, 'https://');
+      return url;
+    },
     showModal() {
       this.isModalVisible = true;
     },
