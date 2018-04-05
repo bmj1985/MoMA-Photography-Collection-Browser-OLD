@@ -28,7 +28,7 @@ Browse the Museum of Modern Art's extensive photography collection by print type
 ## Author
 Brandon Johnson - Full Stack Web Developer - Denver, Colorado
 
-[GitHub](https://github.com/bmj1985/)
+[GitHub](https://github.com/bmj1985/)<br>
 [LinkedIn](https://www.linkedin.com/in/bmj1985/)
 ## License
 MIT
