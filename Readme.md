@@ -1,5 +1,6 @@
 # Museum of Modern Art Photography Collection Browser
 [Deployed Frontend Link](https://momaphotobrowser.firebaseapp.com/)<br>
+[Link to MoMa Artwork Repo](https://github.com/MuseumofModernArt/collection)
 <div>
 <img src="./screenshot.png"/>
 </div>
@@ -15,6 +16,12 @@ Browse the Museum of Modern Art's extensive photography collection by print type
 * This site was created in the hopes of making photography and photographers in the museum's collection easier to discover.  
 ## User Experience
 ## Installation Instructions
+* Fork and clone the repo.
+* cd into momacollectionbrowser
+* ```npm install```
+* For development: ```npm run dev```
+* To build for production ```npm run build```
+* Navigate to dist folder
 ## Technologies
   * Vuejs
   * Bootswatch
