@@ -24,7 +24,7 @@ Browse the Museum of Modern Art's extensive photography collection by print type
 * Navigate to dist folder
 ## Technologies
   * Vuejs
-  * Bootswatch
+  * Bootstrap
 ## Author
 Brandon Johnson - Full Stack Web Developer - Denver, Colorado
 [GitHub](https: //github.com/bmj1985)
