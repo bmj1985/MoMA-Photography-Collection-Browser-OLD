@@ -1,12 +1,10 @@
 # Museum of Modern Art Photography Collection Browser
-[Deployed Frontend Link]()<br>
-[Deployed Backend Link]()<br>
-[Server-side Repo]()<br>
-[Trello Board]()<br>
+[Deployed Frontend Link](https://momaphotobrowser.firebaseapp.com/)<br>
 <div>
 <img src="./screenshot.png"/>
 </div>
 ## App Description
+
 ## Problem Statement
 ## User Experience
 ## Installation Instructions
