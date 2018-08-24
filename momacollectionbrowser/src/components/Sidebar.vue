@@ -19,23 +19,23 @@
 </template>
 
 <script>
-import modal from '@/components/modal';
-import PrintType from '@/components/PrintType';
-import AboutButton from '@/components/AboutButton';
+import modal from "@/components/modal";
+import PrintType from "@/components/PrintType";
+import AboutButton from "@/components/AboutButton";
 
 export default {
-  name: 'Sidebar',
+  name: "Sidebar",
   components: { PrintType, AboutButton },
   props: [
-    'filterPhotographs',
-    'mutatedArtworks',
-    'filterGelatinSilver',
-    'getRandomPhotographs',
-    'search'
+    "filterPhotographs",
+    "mutatedArtworks",
+    "filterGelatinSilver",
+    "getRandomPhotographs",
+    "search"
   ],
   data() {
     return {
-      searchTerm: ''
+      searchTerm: ""
     };
   }
 };

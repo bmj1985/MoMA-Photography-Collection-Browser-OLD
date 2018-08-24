@@ -22,13 +22,13 @@
 </template>
 
 <script>
-import moment from 'moment';
+import dayjs from "dayjs";
 export default {
-  name: 'AttributeList',
+  name: "AttributeList",
   data() {
     return {
       date: this.artwork.DateAcquired,
-      curator: ''
+      curator: ""
     };
   },
   props: {
@@ -44,8 +44,8 @@ export default {
       return this.departmentHeads
         .filter(head => {
           if (
-            moment(new Date(this.date)).isBefore(head.PositionEndYear) &&
-            moment(new Date(this.date)).isAfter(head.PositionBeginYear)
+            dayjs(new Date(this.date)).isBefore(head.PositionEndYear) &&
+            dayjs(new Date(this.date)).isAfter(head.PositionBeginYear)
           ) {
             return head;
           }
