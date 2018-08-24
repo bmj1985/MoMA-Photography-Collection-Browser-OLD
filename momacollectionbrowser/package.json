@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "ajv": "^6.1.1",
-    "moment": "^2.20.1",
+    "dayjs": "^1.7.5",
     "vue": "^2.5.2"
   },
   "devDependencies": {
