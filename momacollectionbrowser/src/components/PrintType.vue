@@ -25,7 +25,7 @@
       <div class="form-check">
         <label class="form-check-label">
           <input @click="filterPhotographs('silver dye bleach')" type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
-          Silver dye bleach (cibacrhome)
+          Silver dye bleach (cibachrome)
         </label>
       </div>
       <div class="form-check">

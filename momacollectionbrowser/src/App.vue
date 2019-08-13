@@ -1,48 +1,55 @@
 /* eslint-disable */
 <template>
-<div id="app">
-  <Sidebar class="sidebar"
+  <div id="app">
+    <Sidebar
+      class="sidebar"
       :filterPhotographs="filterPhotographs"
       :filterGelatinSilver="filterGelatinSilver"
       :mutatedArtworks="mutatedArtworks"
       :getRandomPhotographs="getRandomPhotographs"
       :search="search"
-  />
-  <div v-if="artworks.length < 1" id="pageloadingdiv">
-    <p id="pageloading">Please wait<br>while the<br>page loads.</p>
-  </div>
-  <div v-else-if="mutatedArtworks.length < 1" id="carddiv" >
-    <ul class="cardlist">
-      <li class="row">
+    />
+    <div v-if="artworks.length < 1" id="pageloadingdiv">
+      <p id="pageloading">
+        Please wait
+        <br />while the
+        <br />page loads.
+      </p>
+    </div>
+    <div v-else-if="mutatedArtworks.length < 1" id="carddiv">
+      <ul class="cardlist">
+        <li class="row">
           <Card
-          :artwork="artwork"
-          :departmentHeads="departmentHeads" v-for="artwork in artworks.slice(0,99)"
-          :key="artwork.ObjectID"
+            :artwork="artwork"
+            :departmentHeads="departmentHeads"
+            v-for="artwork in artworks.slice(0,99)"
+            :key="artwork.ObjectID"
           />
-      </li>
-    </ul>
-  </div>
-  <div v-else id="mutatedcarddiv">
-    <ul class="cardlist">
-      <li class="row">
-        <mutatedArtworkCard
-        v-for="mutatedArtwork in mutatedArtworks.slice(0,99)"
-        :key="mutatedArtwork.ObjectID"
-        :mutatedArtwork="mutatedArtwork"
-        :departmentHeads="departmentHeads"/>
-      </li>
+        </li>
       </ul>
-  </div v-else>
-</div>
+    </div>
+    <div v-else id="mutatedcarddiv">
+      <ul class="cardlist">
+        <li class="row">
+          <mutatedArtworkCard
+            v-for="mutatedArtwork in mutatedArtworks.slice(0,99)"
+            :key="mutatedArtwork.ObjectID"
+            :mutatedArtwork="mutatedArtwork"
+            :departmentHeads="departmentHeads"
+          />
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
-import Card from '@/components/Card';
-import mutatedArtworkCard from '@/components/mutatedArtworkCard';
-import Sidebar from '@/components/Sidebar';
+import Card from "@/components/Card";
+import mutatedArtworkCard from "@/components/mutatedArtworkCard";
+import Sidebar from "@/components/Sidebar";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Sidebar,
     Card,
@@ -50,9 +57,9 @@ export default {
   },
   data() {
     return {
-      artistData: '',
-      momaArtworksAPI_Url: '../static/momaartworks.json',
-      momaDeptHeadsAPI_Url: '../static/momadepartmentheads.json',
+      artistData: "",
+      momaArtworksAPI_Url: "../static/photographs.json",
+      momaDeptHeadsAPI_Url: "../static/momadepartmentheads.json",
       departmentHeads: [],
       artworks: [],
       mutatedArtworks: [],
@@ -68,17 +75,18 @@ export default {
       fetch(this.momaArtworksAPI_Url)
         .then(response => response.json())
         .then(response => {
-          const artworks = response.filter((artwork, index) => {
-            if (
-              artwork.Department === 'Photography' &&
-              artwork.ThumbnailURL != null
-            ) {
-              return artwork;
-            }
-          });
-          this.artworks = artworks.sort(() => {
-            return 0.5 - Math.random();
-          });
+          // const artworks = response.filter((artwork, index) => {
+          //   if (
+          //     artwork.Department === "Photography" &&
+          //     artwork.ThumbnailURL != null
+          //   ) {
+          //     return artwork;
+          //   }
+          // });
+          this.artworks = response
+            .sort(() => {
+              return 0.5 - Math.random();
+            });
           this.getDataForDeptHeads();
         });
     },
@@ -88,7 +96,7 @@ export default {
         .then(response => {
           let departmentHeads = response.filter(department => {
             return (
-              department.DepartmentFullName === 'Department of Photography'
+              department.DepartmentFullName === "Department of Photography"
             );
           });
           this.departmentHeads = departmentHeads;
@@ -98,13 +106,13 @@ export default {
     formatDeptHeadData() {
       return this.departmentHeads.map(head => {
         head.PositionBeginYear = new Date(
-          head.PositionBeginYear.toString() + '-' + '01' + '-' + '01'
+          head.PositionBeginYear.toString() + "-" + "01" + "-" + "01"
         );
-        if (head.PositionEndYear === '') {
+        if (head.PositionEndYear === "") {
           head.PositionEndYear = new Date();
         } else {
           head.PositionEndYear = new Date(
-            head.PositionEndYear + '-' + '12' + '-' + '31'
+            head.PositionEndYear + "-" + "12" + "-" + "31"
           );
         }
         return head;
@@ -128,9 +136,9 @@ export default {
       );
       let stringGelatinSilver = gelatinSilver.filter(photograph => {
         if (
-          photograph.Medium.toLowerCase().includes('gelatin silver') === true &&
+          photograph.Medium.toLowerCase().includes("gelatin silver") === true &&
           photograph.Medium.toLowerCase().includes(
-            'printing-out-paper print'
+            "printing-out-paper print"
           ) === false
         ) {
           return photograph;
@@ -162,15 +170,15 @@ export default {
       });
     },
     filterArray(array, searchTerm) {
-      let formattedSearchTerm = searchTerm.replace(/-|\s/g, '').toLowerCase();
+      let formattedSearchTerm = searchTerm.replace(/-|\s/g, "").toLowerCase();
       if (
         Array.isArray(array) === true &&
         array[0] !== undefined &&
         array[0] !== null &&
-        typeof array[0] != 'number' &&
+        typeof array[0] != "number" &&
         array[0]
           .toString()
-          .replace(/-|\s/g, '')
+          .replace(/-|\s/g, "")
           .toLowerCase()
           .includes(formattedSearchTerm)
       ) {
@@ -179,11 +187,11 @@ export default {
       return false;
     },
     filterString(string, searchTerm) {
-      let formattedSearchTerm = searchTerm.replace(/-|\s/g, '').toLowerCase();
+      let formattedSearchTerm = searchTerm.replace(/-|\s/g, "").toLowerCase();
       if (
-        typeof string === 'string' &&
+        typeof string === "string" &&
         string
-          .replace(/-|\s/g, '')
+          .replace(/-|\s/g, "")
           .toLowerCase()
           .includes(formattedSearchTerm)
       ) {
